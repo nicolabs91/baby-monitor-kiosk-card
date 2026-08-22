@@ -1,0 +1,2 @@
+import {describe,it,expect} from 'vitest';import {initialMuted} from '../src/audio';
+describe('iOS-safe audio startup',()=>{it('always starts a preloaded stream muted even when unmuted was remembered',()=>{expect(initialMuted(true,'false',false)).toBe(true)});it('respects stored and configured state without preloading',()=>{expect(initialMuted(false,'false',true)).toBe(false);expect(initialMuted(false,null,true)).toBe(true)})});

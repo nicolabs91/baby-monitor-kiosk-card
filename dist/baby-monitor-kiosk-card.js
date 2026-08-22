@@ -247,11 +247,11 @@ let v = class extends HTMLElement {
   }
 };
 v.elementStyles = [], v.shadowRootOptions = { mode: "open" }, v[x("elementProperties")] = /* @__PURE__ */ new Map(), v[x("finalized")] = /* @__PURE__ */ new Map(), Ut?.({ ReactiveElement: v }), (j.reactiveElementVersions ??= []).push("2.1.2");
-const J = globalThis, nt = (e) => e, R = J.trustedTypes, rt = R ? R.createPolicy("lit-html", { createHTML: (e) => e }) : void 0, _t = "$lit$", g = `lit$${Math.random().toFixed(9).slice(2)}$`, $t = "?" + g, Dt = `<${$t}>`, y = document, M = () => y.createComment(""), P = (e) => e === null || typeof e != "object" && typeof e != "function", F = Array.isArray, Tt = (e) => F(e) || typeof e?.[Symbol.iterator] == "function", V = `[ 	
-\f\r]`, k = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, at = /-->/g, ht = />/g, _ = RegExp(`>|${V}(?:([^\\s"'>=/]+)(${V}*=${V}*(?:[^ 	
+const F = globalThis, nt = (e) => e, R = F.trustedTypes, rt = R ? R.createPolicy("lit-html", { createHTML: (e) => e }) : void 0, _t = "$lit$", g = `lit$${Math.random().toFixed(9).slice(2)}$`, $t = "?" + g, Dt = `<${$t}>`, y = document, M = () => y.createComment(""), P = (e) => e === null || typeof e != "object" && typeof e != "function", J = Array.isArray, Tt = (e) => J(e) || typeof e?.[Symbol.iterator] == "function", z = `[ 	
+\f\r]`, k = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, at = /-->/g, ht = />/g, _ = RegExp(`>|${z}(?:([^\\s"'>=/]+)(${z}*=${z}*(?:[^ 	
 \f\r"'\`<>=]|("|')|))|$)`, "g"), lt = /'/g, ct = /"/g, bt = /^(?:script|style|textarea|title)$/i, Rt = (e) => (t, ...s) => ({ _$litType$: e, strings: t, values: s }), p = Rt(1), S = /* @__PURE__ */ Symbol.for("lit-noChange"), l = /* @__PURE__ */ Symbol.for("lit-nothing"), dt = /* @__PURE__ */ new WeakMap(), $ = y.createTreeWalker(y, 129);
 function yt(e, t) {
-  if (!F(e) || !e.hasOwnProperty("raw")) throw Error("invalid template strings array");
+  if (!J(e) || !e.hasOwnProperty("raw")) throw Error("invalid template strings array");
   return rt !== void 0 ? rt.createHTML(t) : t;
 }
 const Ht = (e, t) => {
@@ -280,7 +280,7 @@ class I {
       if (o.nodeType === 1) {
         if (o.hasAttributes()) for (const c of o.getAttributeNames()) if (c.endsWith(_t)) {
           const f = u[r++], m = o.getAttribute(c).split(g), U = /([.?@])?(.*)/.exec(f);
-          a.push({ type: 1, index: n, name: U[2], strings: m, ctor: U[1] === "." ? Bt : U[1] === "?" ? zt : U[1] === "@" ? Vt : B }), o.removeAttribute(c);
+          a.push({ type: 1, index: n, name: U[2], strings: m, ctor: U[1] === "." ? Bt : U[1] === "?" ? Vt : U[1] === "@" ? zt : B }), o.removeAttribute(c);
         } else c.startsWith(g) && (a.push({ type: 6, index: n }), o.removeAttribute(c));
         if (bt.test(o.tagName)) {
           const c = o.textContent.split(g), f = c.length - 1;
@@ -380,7 +380,7 @@ class L {
     return s === void 0 && dt.set(t.strings, s = new I(t)), s;
   }
   k(t) {
-    F(this._$AH) || (this._$AH = [], this._$AR());
+    J(this._$AH) || (this._$AH = [], this._$AR());
     const s = this._$AH;
     let i, o = 0;
     for (const n of t) o === s.length ? s.push(i = new L(this.O(M()), this.O(M()), this, this.options)) : i = s[o], i._$AI(n), o++;
@@ -429,7 +429,7 @@ class Bt extends B {
     this.element[this.name] = t === l ? void 0 : t;
   }
 }
-class zt extends B {
+class Vt extends B {
   constructor() {
     super(...arguments), this.type = 4;
   }
@@ -437,7 +437,7 @@ class zt extends B {
     this.element.toggleAttribute(this.name, !!t && t !== l);
   }
 }
-class Vt extends B {
+class zt extends B {
   constructor(t, s, i, o, n) {
     super(t, s, i, o, n), this.type = 5;
   }
@@ -461,8 +461,8 @@ class Wt {
     w(this, t);
   }
 }
-const qt = J.litHtmlPolyfillSupport;
-qt?.(I, L), (J.litHtmlVersions ??= []).push("3.3.3");
+const qt = F.litHtmlPolyfillSupport;
+qt?.(I, L), (F.litHtmlVersions ??= []).push("3.3.3");
 const vt = (e, t, s) => {
   const i = s?.renderBefore ?? t;
   let o = i._$litPart$;
@@ -504,7 +504,7 @@ const At = (e) => (t, s) => {
     customElements.define(e, t);
   }) : customElements.define(e, t);
 };
-const Gt = { attribute: !0, type: String, converter: T, reflect: !1, hasChanged: G }, Jt = (e = Gt, t, s) => {
+const Gt = { attribute: !0, type: String, converter: T, reflect: !1, hasChanged: G }, Ft = (e = Gt, t, s) => {
   const { kind: i, metadata: o } = s;
   let n = globalThis.litPropertyMetadata.get(o);
   if (n === void 0 && globalThis.litPropertyMetadata.set(o, n = /* @__PURE__ */ new Map()), i === "setter" && ((e = Object.create(e)).wrapped = !0), n.set(s.name, e), i === "accessor") {
@@ -526,7 +526,7 @@ const Gt = { attribute: !0, type: String, converter: T, reflect: !1, hasChanged:
   throw Error("Unsupported decorator location: " + i);
 };
 function Z(e) {
-  return (t, s) => typeof s == "object" ? Jt(e, t, s) : ((i, o, n) => {
+  return (t, s) => typeof s == "object" ? Ft(e, t, s) : ((i, o, n) => {
     const r = o.hasOwnProperty(n);
     return o.constructor.createProperty(n, i), r ? Object.getOwnPropertyDescriptor(o, n) : void 0;
   })(e, t, s);
@@ -547,10 +547,10 @@ function wt(e) {
 function ut(e) {
   return Et + e + ":muted";
 }
-var Ft = Object.defineProperty, Qt = Object.getOwnPropertyDescriptor, tt = (e, t, s, i) => {
+var Jt = Object.defineProperty, Qt = Object.getOwnPropertyDescriptor, tt = (e, t, s, i) => {
   for (var o = i > 1 ? void 0 : i ? Qt(t, s) : t, n = e.length - 1, r; n >= 0; n--)
     (r = e[n]) && (o = (i ? r(t, s, o) : r(o)) || o);
-  return i && o && Ft(t, s, o), o;
+  return i && o && Jt(t, s, o), o;
 };
 let N = class extends E {
   setConfig(e) {
@@ -673,10 +673,13 @@ function W(e, t) {
 function ft(e, t) {
   O.get(e) === t && O.delete(e);
 }
-var ee = Object.defineProperty, se = Object.getOwnPropertyDescriptor, z = (e, t, s, i) => {
-  for (var o = i > 1 ? void 0 : i ? se(t, s) : t, n = e.length - 1, r; n >= 0; n--)
+function ee(e, t, s) {
+  return e ? !0 : t === null ? s : t === "true";
+}
+var se = Object.defineProperty, ie = Object.getOwnPropertyDescriptor, V = (e, t, s, i) => {
+  for (var o = i > 1 ? void 0 : i ? ie(t, s) : t, n = e.length - 1, r; n >= 0; n--)
     (r = e[n]) && (o = (i ? r(t, s, o) : r(o)) || o);
-  return i && o && ee(t, s, o), o;
+  return i && o && se(t, s, o), o;
 };
 let C = class extends E {
   constructor() {
@@ -693,14 +696,14 @@ let C = class extends E {
     const t = e.id ?? `${e.camera ?? e.stream}|${e.sound_sensor}`;
     this.config && this.configId !== t && (this.unsubscribe?.(), ft(this.configId, this), this.portal?.remove(), this.portal = void 0, this.camera = void 0, this.cameraSignature = ""), this.config = { ...A, ...e }, this.id = this.configId, this.currentBrightness = e.companion?.active_brightness ?? 100, this.currentVolume = e.companion?.active_volume ?? 100;
     const s = e.audio?.remember_state === !1 ? null : localStorage.getItem(ut(this.configId));
-    this.muted = s === null ? e.audio?.default_muted ?? !1 : s === "true", this.connectRuntime(), this.isConnected && (this.ensureCamera(), this.configureCamera());
+    this.muted = ee(e.preload !== !1, s, e.audio?.default_muted ?? !1), this.connectRuntime(), this.isConnected && (this.ensureCamera(), this.configureCamera());
   }
   get configId() {
     return this.config?.id ?? `${this.config?.camera ?? this.config?.stream}|${this.config?.sound_sensor}`;
   }
   connectRuntime() {
     this.unsubscribe?.(), this.runtime = te(this.config), this.unsubscribe = this.runtime.subscribe((e) => {
-      this.machineState = e, this.requestUpdate(), W(this.configId, this) && (e === "ACTIVE" && this.companion(!0), (e === "IDLE" || e === "MANUAL_COOLDOWN") && this.companion(!1));
+      this.machineState = e, this.requestUpdate(), W(this.configId, this) && (e === "ACTIVE" && (this.companion(!0), this.resumeVideo()), (e === "IDLE" || e === "MANUAL_COOLDOWN") && this.companion(!1));
     });
   }
   connectedCallback() {
@@ -721,6 +724,19 @@ let C = class extends E {
   }
   ensureCamera() {
     !this.isConnected || this.camera || !this.config || !this.eligible() || !W(this.configId, this) || (this.camera = document.createElement("webrtc-camera"), this.camera.style.cssText = "display:block;width:100%;height:100%;object-fit:contain", this.configureCamera());
+  }
+  async resumeVideo() {
+    await this.updateComplete, requestAnimationFrame(() => {
+      this.playVideos(this.camera), setTimeout(() => this.playVideos(this.camera), 300);
+    });
+  }
+  playVideos(e) {
+    if (e) {
+      for (const t of e.querySelectorAll?.("video") ?? [])
+        t.muted = this.muted, t.playsInline = !0, t.play?.().catch(() => {
+        });
+      this.playVideos(e.shadowRoot);
+    }
   }
   eligible() {
     return this.config.kiosk?.enabled !== !1 && (this.config.kiosk?.device_bound === !1 || b(this.configId)) && (!this.config.kiosk?.allowed_user_ids?.length || !!this.hass?.user && this.config.kiosk.allowed_user_ids.includes(this.hass.user.id));
@@ -770,19 +786,19 @@ let C = class extends E {
   }
 };
 C.styles = gt`:host{display:block;min-height:1px}.stage{position:fixed;inset:0;z-index:2147483000;background:#000;display:grid;place-items:center}.stage>*:first-child{width:100%;height:100%}.controls{position:absolute;left:50%;bottom:max(24px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:18px}.controls button{width:68px;height:68px;border:0;border-radius:50%;font-size:28px;background:#111c;color:white}.preload{position:fixed;width:2px;height:2px;opacity:.01;pointer-events:none;overflow:hidden;left:-4px;top:-4px}.debug{position:fixed;z-index:2147483001;top:8px;left:8px;background:#000b;color:#fff;padding:8px;font:14px monospace}.idle{font-size:12px;color:var(--secondary-text-color)}`;
-z([
+V([
   Z({ attribute: !1 })
 ], C.prototype, "hass", 2);
-z([
+V([
   X()
 ], C.prototype, "machineState", 2);
-z([
+V([
   X()
 ], C.prototype, "muted", 2);
-C = z([
+C = V([
   At("baby-monitor-kiosk-card")
 ], C);
 window.customCards = window.customCards || [];
 window.customCards.push({ type: "baby-monitor-kiosk-card", name: "Baby Monitor Kiosk Card", description: "Device-local sound-triggered preloaded WebRTC baby monitor" });
-console.info("%c BABY-MONITOR-KIOSK-CARD %c 0.1.0 ", "color:white;background:#3949ab;font-weight:bold", "color:#3949ab;background:white");
+console.info("%c BABY-MONITOR-KIOSK-CARD %c 0.1.8 ", "color:white;background:#3949ab;font-weight:bold", "color:#3949ab;background:white");
 //# sourceMappingURL=baby-monitor-kiosk-card.js.map
