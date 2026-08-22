@@ -699,7 +699,14 @@ let y = class extends w {
     return document.createElement("baby-monitor-kiosk-card-editor");
   }
   static getStubConfig() {
-    return { type: "custom:baby-monitor-kiosk-card", camera: "camera.babykamer", sound_sensor: "binary_sensor.babykamer_geluid", preload: !0, silence_duration: 5, kiosk: { device_bound: !0 } };
+    return {
+      type: "custom:baby-monitor-kiosk-card",
+      camera: "camera.babykamer",
+      sound_sensor: "binary_sensor.babykamer_geluid",
+      preload: !0,
+      silence_duration: 5,
+      kiosk: { device_bound: !0 }
+    };
   }
   setConfig(e) {
     if (!e.camera && !e.stream || !e.sound_sensor) throw Error("camera or stream, and sound_sensor are required");
@@ -726,7 +733,12 @@ let y = class extends w {
     this.hass && this.runtime?.update(this.hass), this.ensureCamera(), this.camera && (this.camera.hass = this.hass), this.syncPortal();
   }
   cameraConfig() {
-    return { type: "custom:webrtc-camera", ...this.config.stream ? { url: this.config.stream } : { entity: this.config.camera }, muted: this.muted, controls: !0 };
+    return {
+      type: "custom:webrtc-camera",
+      ...this.config.stream ? { url: this.config.stream } : { entity: this.config.camera },
+      muted: this.muted,
+      controls: !0
+    };
   }
   configureCamera() {
     const e = this.cameraConfig(), t = JSON.stringify(e);
@@ -779,12 +791,16 @@ let y = class extends w {
     const t = this.config.companion?.notify_service;
     if (!t || !this.eligible() || !this.hass) return;
     const i = e ? this.config.companion?.active_brightness : this.config.companion?.idle_brightness, s = e ? this.config.companion?.active_volume : this.config.companion?.idle_volume, o = [];
-    e && this.config.companion?.screensaver !== !1 && o.push({ message: "kiosk_hide_screensaver" }), i != null && o.push({ message: "kiosk_set_brightness", data: { level: i } }), s != null && o.push({ message: "kiosk_set_volume", data: { volume: s } }), !e && this.config.companion?.screensaver !== !1 && o.push({ message: "kiosk_show_screensaver" });
-    for (const n of o) try {
-      await this.hass.callService("notify", t, n);
-    } catch (r) {
-      this.config.debug && console.warn("[baby-monitor] Companion command failed", r);
-    }
+    e && this.config.companion?.screensaver !== !1 && o.push({ message: "kiosk_hide_screensaver" }), i != null && o.push({
+      message: "kiosk_set_brightness",
+      data: { level: i }
+    }), s != null && o.push({ message: "kiosk_set_volume", data: { volume: s } }), !e && this.config.companion?.screensaver !== !1 && o.push({ message: "kiosk_show_screensaver" });
+    for (const n of o)
+      try {
+        await this.hass.callService("notify", t, n);
+      } catch (r) {
+        this.config.debug && console.warn("[baby-monitor] Companion command failed", r);
+      }
   }
   async kioskLevel(e, t) {
     const i = this.config.companion?.notify_service;
@@ -802,7 +818,38 @@ let y = class extends w {
     if (!this.camera || !W(this.configId, this)) return;
     this.portal || (this.portal = document.createElement("div"), this.portal.dataset.babyMonitorKiosk = this.configId, document.body.append(this.portal));
     const e = this.active(), t = this.config.preload !== !1 && this.eligible();
-    this.portal.style.cssText = e ? "position:fixed;inset:0;z-index:2147483000;opacity:1;pointer-events:auto;background:#000;display:grid;place-items:center;overflow:hidden;" : "position:fixed;inset:0;z-index:-1;opacity:.001;pointer-events:none;background:#000;display:grid;place-items:center;overflow:hidden;", At(e || t ? u`<style>.cam{width:100%;height:100%;min-width:100vw;min-height:100vh}.controls{position:absolute;left:50%;bottom:max(24px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:12px;flex-wrap:wrap;justify-content:center}.controls button{width:68px;height:68px;border:0;border-radius:50%;font-size:25px;background:#111c;color:#fff}</style><div class=cam>${this.camera}</div>${e ? u`<div class=controls>${this.config.controls?.brightness ? u`<button aria-label="Helderheid lager" @click=${() => this.kioskLevel("brightness", -20)}>☀−</button><button aria-label="Helderheid hoger" @click=${() => this.kioskLevel("brightness", 20)}>☀+</button>` : h}${this.config.controls?.volume ? u`<button aria-label="Volume lager" @click=${() => this.kioskLevel("volume", -20)}>−🔊</button><button aria-label="Volume hoger" @click=${() => this.kioskLevel("volume", 20)}>+🔊</button>` : h}${this.config.controls?.mute !== !1 ? u`<button aria-label=${this.muted ? "Geluid aan" : "Geluid uit"} @click=${() => this.toggleMute()}>${this.muted ? "🔇" : "🔊"}</button>` : h}${this.config.controls?.close !== !1 ? u`<button aria-label="Sluiten" @click=${() => this.runtime?.close()}>✕</button>` : h}</div>` : h}` : h, this.portal);
+    this.portal.style.cssText = e ? "position:fixed;inset:0;z-index:2147483000;opacity:1;pointer-events:auto;background:#000;display:grid;place-items:center;overflow:hidden;" : "position:fixed;inset:0;z-index:-1;opacity:.001;pointer-events:none;background:#000;display:grid;place-items:center;overflow:hidden;", At(
+      e || t ? u`<style>
+              .cam {
+                width: 100%;
+                height: 100%;
+                min-width: 100vw;
+                min-height: 100vh;
+              }
+              .controls {
+                position: absolute;
+                left: 50%;
+                bottom: max(24px, env(safe-area-inset-bottom));
+                transform: translateX(-50%);
+                display: flex;
+                gap: 12px;
+                flex-wrap: wrap;
+                justify-content: center;
+              }
+              .controls button {
+                width: 68px;
+                height: 68px;
+                border: 0;
+                border-radius: 50%;
+                font-size: 25px;
+                background: #111c;
+                color: #fff;
+              }
+            </style>
+            <div class="cam">${this.camera}</div>
+            ${e ? u`<div class="controls">${this.config.controls?.brightness ? u`<button aria-label="Helderheid lager" @click=${() => this.kioskLevel("brightness", -20)}>☀−</button><button aria-label="Helderheid hoger" @click=${() => this.kioskLevel("brightness", 20)}>☀+</button>` : h}${this.config.controls?.volume ? u`<button aria-label="Volume lager" @click=${() => this.kioskLevel("volume", -20)}>−🔊</button><button aria-label="Volume hoger" @click=${() => this.kioskLevel("volume", 20)}>+🔊</button>` : h}${this.config.controls?.mute !== !1 ? u`<button aria-label=${this.muted ? "Geluid aan" : "Geluid uit"} @click=${() => this.toggleMute()}>${this.muted ? "🔇" : "🔊"}</button>` : h}${this.config.controls?.close !== !1 ? u`<button aria-label="Sluiten" @click=${() => this.runtime?.close()}>✕</button>` : h}</div>` : h}` : h,
+      this.portal
+    );
   }
   togglePair() {
     $(this.configId) ? kt(this.configId) : xt(this.configId), $(this.configId) && this.ensureCamera(), this.requestUpdate();
@@ -810,10 +857,188 @@ let y = class extends w {
   render() {
     if (!this.config) return h;
     const e = this.hass?.states[this.config.sound_sensor]?.state ?? "?", t = $(this.configId), i = t && this.automaticAudio;
-    return u`${this.config.show_setup ? u`<ha-card class="setup"><div class="monitor-icon ${i ? "ready" : ""}"><ha-icon icon="mdi:baby-face-outline"></ha-icon></div><div class="copy"><div class="title">Baby Monitor</div><div class="status"><span class="dot ${i ? "ok" : ""}"></span>${t ? this.automaticAudio ? "Klaar · automatisch geluid" : "Gekoppeld · tik voor geluid" : "Niet gekoppeld"}</div></div><div class="actions">${t && !this.automaticAudio ? u`<button class="icon-button primary" title="Automatisch camerageluid inschakelen" aria-label="Automatisch camerageluid inschakelen" @click=${() => this.enableAutomaticAudio()}><ha-icon icon="mdi:volume-high"></ha-icon></button>` : h}<button class="icon-button" title=${t ? "Dit apparaat ontkoppelen" : "Dit apparaat koppelen"} aria-label=${t ? "Dit apparaat ontkoppelen" : "Dit apparaat koppelen"} @click=${() => this.togglePair()}><ha-icon icon=${t ? "mdi:link-variant" : "mdi:link-variant-plus"}></ha-icon></button></div></ha-card>` : h}${!this.active() && this.config.preload === !1 ? u`<span class=idle>Baby monitor gereed</span>` : h}${this.config.debug ? u`<div class=debug>state=${this.machineState} | value=${e} | on≥${this.config.sound_threshold_db ?? "-"} | off≤${this.config.sound_reset_db ?? "-"} | timer=${Math.ceil((this.runtime?.remainingMs() ?? 0) / 1e3)}s | kiosk=${this.eligible()} | preload=${this.config.preload !== !1 && this.eligible()}</div>` : h}`;
+    return u`${this.config.show_setup ? u`<ha-card class="setup"
+          ><div class="monitor-icon ${i ? "ready" : ""}">
+            <ha-icon icon="mdi:baby-face-outline"></ha-icon>
+          </div>
+          <div class="copy">
+            <div class="title">Baby Monitor</div>
+            <div class="status"><span class="dot ${i ? "ok" : ""}"></span>${t ? this.automaticAudio ? "Klaar · automatisch geluid" : "Gekoppeld · tik voor geluid" : "Niet gekoppeld"}</div>
+          </div>
+          <div class="actions">
+            ${t && !this.automaticAudio ? u`<button class="icon-button primary" title="Automatisch camerageluid inschakelen" aria-label="Automatisch camerageluid inschakelen" @click=${() => this.enableAutomaticAudio()}>
+                  <ha-icon icon="mdi:volume-high"></ha-icon>
+                </button>` : h}<button class="icon-button" title=${t ? "Dit apparaat ontkoppelen" : "Dit apparaat koppelen"} aria-label=${t ? "Dit apparaat ontkoppelen" : "Dit apparaat koppelen"} @click=${() => this.togglePair()}>
+              <ha-icon icon=${t ? "mdi:link-variant" : "mdi:link-variant-plus"}></ha-icon>
+            </button></div
+        ></ha-card>` : h}${!this.active() && this.config.preload === !1 ? u`<span class="idle">Baby monitor gereed</span>` : h}${this.config.debug ? u`<div class="debug">state=${this.machineState} | value=${e} | on≥${this.config.sound_threshold_db ?? "-"} | off≤${this.config.sound_reset_db ?? "-"} | timer=${Math.ceil((this.runtime?.remainingMs() ?? 0) / 1e3)}s | kiosk=${this.eligible()} | preload=${this.config.preload !== !1 && this.eligible()}</div>` : h}`;
   }
 };
-y.styles = _t`:host{display:block;min-height:1px;container-type:inline-size}ha-card.setup{height:78px;min-height:78px;max-height:78px;padding:10px 12px;box-sizing:border-box;display:flex;align-items:center;gap:11px;overflow:hidden;border-radius:20px}.monitor-icon{position:relative;width:42px;height:42px;flex:0 0 42px;border-radius:13px;display:grid;place-items:center;color:var(--state-icon-color,var(--primary-color));background:color-mix(in srgb,var(--state-icon-color,var(--primary-color)) 14%,transparent)}.monitor-icon::after{content:'';position:absolute;right:-2px;bottom:-2px;width:9px;height:9px;border:2px solid var(--card-background-color,#fff);border-radius:50%;background:var(--warning-color,#ff9800)}.monitor-icon.ready::after{background:var(--success-color,#4caf50)}.monitor-icon ha-icon{--mdc-icon-size:28px}.copy{min-width:0;flex:1;line-height:1.2}.title{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.status{margin-top:5px;display:flex;align-items:center;gap:6px;color:var(--secondary-text-color);font-size:12px;white-space:nowrap}.dot{width:7px;height:7px;border-radius:50%;background:var(--warning-color,#ff9800)}.dot.ok{background:var(--success-color,#4caf50)}.actions{display:flex;gap:5px;flex:0 0 auto}.icon-button{width:38px;height:38px;border:0;border-radius:12px;display:grid;place-items:center;background:var(--secondary-background-color);color:var(--primary-text-color);cursor:pointer}.icon-button.primary{color:var(--primary-color);background:color-mix(in srgb,var(--primary-color) 14%,var(--card-background-color))}.icon-button ha-icon{--mdc-icon-size:21px}@container (max-width:250px){ha-card.setup{padding:10px;gap:8px}.copy{display:none}.actions{margin-left:auto}}.stage{position:fixed;inset:0;z-index:2147483000;background:#000;display:grid;place-items:center}.stage>*:first-child{width:100%;height:100%}.controls{position:absolute;left:50%;bottom:max(24px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:18px}.controls button{width:68px;height:68px;border:0;border-radius:50%;font-size:28px;background:#111c;color:white}.preload{position:fixed;width:2px;height:2px;opacity:.01;pointer-events:none;overflow:hidden;left:-4px;top:-4px}.debug{position:fixed;z-index:2147483001;top:8px;left:8px;background:#000b;color:#fff;padding:8px;font:14px monospace}.idle{font-size:12px;color:var(--secondary-text-color)}`;
+y.styles = _t`
+    :host {
+      display: block;
+      min-height: 1px;
+      container-type: inline-size;
+    }
+    ha-card.setup {
+      height: 56px;
+      min-height: 56px;
+      max-height: 56px;
+      padding: 6px 10px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    .monitor-icon {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      flex: 0 0 36px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      color: var(--state-icon-color, var(--primary-color));
+      background: color-mix(in srgb, var(--state-icon-color, var(--primary-color)) 14%, transparent);
+    }
+    .monitor-icon::after {
+      content: "";
+      position: absolute;
+      right: -2px;
+      bottom: -2px;
+      width: 9px;
+      height: 9px;
+      border: 2px solid var(--card-background-color, #fff);
+      border-radius: 50%;
+      background: var(--warning-color, #ff9800);
+    }
+    .monitor-icon.ready::after {
+      background: var(--success-color, #4caf50);
+    }
+    .monitor-icon ha-icon {
+      --mdc-icon-size: 28px;
+    }
+    .copy {
+      min-width: 0;
+      flex: 1;
+      line-height: 1.2;
+    }
+    .title {
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .status {
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--secondary-text-color);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--warning-color, #ff9800);
+    }
+    .dot.ok {
+      background: var(--success-color, #4caf50);
+    }
+    .actions {
+      display: flex;
+      gap: 5px;
+      flex: 0 0 auto;
+    }
+    .icon-button {
+      width: 34px;
+      height: 34px;
+      border: 0;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: var(--secondary-background-color);
+      color: var(--primary-text-color);
+      cursor: pointer;
+    }
+    .icon-button.primary {
+      color: var(--primary-color);
+      background: color-mix(in srgb, var(--primary-color) 14%, var(--card-background-color));
+    }
+    .icon-button ha-icon {
+      --mdc-icon-size: 21px;
+    }
+    @container (max-width:250px) {
+      ha-card.setup {
+        padding: 6px 8px;
+        gap: 6px;
+      }
+      .copy {
+        display: none;
+      }
+      .actions {
+        margin-left: auto;
+      }
+    }
+    .stage {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483000;
+      background: #000;
+      display: grid;
+      place-items: center;
+    }
+    .stage > *:first-child {
+      width: 100%;
+      height: 100%;
+    }
+    .controls {
+      position: absolute;
+      left: 50%;
+      bottom: max(24px, env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      display: flex;
+      gap: 18px;
+    }
+    .controls button {
+      width: 68px;
+      height: 68px;
+      border: 0;
+      border-radius: 50%;
+      font-size: 28px;
+      background: #111c;
+      color: white;
+    }
+    .preload {
+      position: fixed;
+      width: 2px;
+      height: 2px;
+      opacity: 0.01;
+      pointer-events: none;
+      overflow: hidden;
+      left: -4px;
+      top: -4px;
+    }
+    .debug {
+      position: fixed;
+      z-index: 2147483001;
+      top: 8px;
+      left: 8px;
+      background: #000b;
+      color: #fff;
+      padding: 8px;
+      font: 14px monospace;
+    }
+    .idle {
+      font-size: 12px;
+      color: var(--secondary-text-color);
+    }
+  `;
 L([
   Y({ attribute: !1 })
 ], y.prototype, "hass", 2);
@@ -830,6 +1055,10 @@ y = L([
   Et("baby-monitor-kiosk-card")
 ], y);
 window.customCards = window.customCards || [];
-window.customCards.push({ type: "baby-monitor-kiosk-card", name: "Baby Monitor Kiosk Card", description: "Device-local sound-triggered preloaded WebRTC baby monitor" });
-console.info("%c BABY-MONITOR-KIOSK-CARD %c 0.3.2 ", "color:white;background:#3949ab;font-weight:bold", "color:#3949ab;background:white");
+window.customCards.push({
+  type: "baby-monitor-kiosk-card",
+  name: "Baby Monitor Kiosk Card",
+  description: "Device-local sound-triggered preloaded WebRTC baby monitor"
+});
+console.info("%c BABY-MONITOR-KIOSK-CARD %c 0.3.3 ", "color:white;background:#3949ab;font-weight:bold", "color:#3949ab;background:white");
 //# sourceMappingURL=baby-monitor-kiosk-card.js.map
