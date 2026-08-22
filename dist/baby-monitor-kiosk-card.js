@@ -85,8 +85,8 @@ let A = class extends HTMLElement {
       this[i] = r;
     } };
     return { get: o, set(r) {
-      const h = o?.call(this);
-      n?.call(this, r), this.requestUpdate(t, h, s);
+      const c = o?.call(this);
+      n?.call(this, r), this.requestUpdate(t, c, s);
     }, configurable: !0, enumerable: !0 };
   }
   static getPropertyOptions(t) {
@@ -171,8 +171,8 @@ let A = class extends HTMLElement {
     if (o !== void 0 && this._$Em !== o) {
       const n = s.getPropertyOptions(o), r = typeof n.converter == "function" ? { fromAttribute: n.converter } : n.converter?.fromAttribute !== void 0 ? n.converter : R;
       this._$Em = o;
-      const h = r.fromAttribute(i, n.type);
-      this[o] = h ?? this._$Ej?.get(o) ?? h, this._$Em = null;
+      const c = r.fromAttribute(i, n.type);
+      this[o] = c ?? this._$Ej?.get(o) ?? c, this._$Em = null;
     }
   }
   requestUpdate(t, i, s, o = !1, n) {
@@ -208,8 +208,8 @@ let A = class extends HTMLElement {
       }
       const s = this.constructor.elementProperties;
       if (s.size > 0) for (const [o, n] of s) {
-        const { wrapped: r } = n, h = this[o];
-        r !== !0 || this._$AL.has(o) || h === void 0 || this.C(o, void 0, n, h);
+        const { wrapped: r } = n, c = this[o];
+        r !== !0 || this._$AL.has(o) || c === void 0 || this.C(o, void 0, n, c);
       }
     }
     let t = !1;
@@ -247,22 +247,22 @@ let A = class extends HTMLElement {
   }
 };
 A.elementStyles = [], A.shadowRootOptions = { mode: "open" }, A[C("elementProperties")] = /* @__PURE__ */ new Map(), A[C("finalized")] = /* @__PURE__ */ new Map(), Tt?.({ ReactiveElement: A }), (z.reactiveElementVersions ??= []).push("2.1.2");
-const Q = globalThis, rt = (e) => e, H = Q.trustedTypes, at = H ? H.createPolicy("lit-html", { createHTML: (e) => e }) : void 0, $t = "$lit$", g = `lit$${Math.random().toFixed(9).slice(2)}$`, bt = "?" + g, Rt = `<${bt}>`, v = document, M = () => v.createComment(""), P = (e) => e === null || typeof e != "object" && typeof e != "function", Z = Array.isArray, Ht = (e) => Z(e) || typeof e?.[Symbol.iterator] == "function", q = `[ 	
-\f\r]`, x = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, ht = /-->/g, ct = />/g, _ = RegExp(`>|${q}(?:([^\\s"'>=/]+)(${q}*=${q}*(?:[^ 	
-\f\r"'\`<>=]|("|')|))|$)`, "g"), lt = /'/g, dt = /"/g, vt = /^(?:script|style|textarea|title)$/i, Vt = (e) => (t, ...i) => ({ _$litType$: e, strings: t, values: i }), u = Vt(1), k = /* @__PURE__ */ Symbol.for("lit-noChange"), c = /* @__PURE__ */ Symbol.for("lit-nothing"), ut = /* @__PURE__ */ new WeakMap(), $ = v.createTreeWalker(v, 129);
+const Q = globalThis, rt = (e) => e, H = Q.trustedTypes, at = H ? H.createPolicy("lit-html", { createHTML: (e) => e }) : void 0, bt = "$lit$", g = `lit$${Math.random().toFixed(9).slice(2)}$`, $t = "?" + g, Rt = `<${$t}>`, v = document, M = () => v.createComment(""), P = (e) => e === null || typeof e != "object" && typeof e != "function", Z = Array.isArray, Ht = (e) => Z(e) || typeof e?.[Symbol.iterator] == "function", q = `[ 	
+\f\r]`, S = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, ct = /-->/g, ht = />/g, _ = RegExp(`>|${q}(?:([^\\s"'>=/]+)(${q}*=${q}*(?:[^ 	
+\f\r"'\`<>=]|("|')|))|$)`, "g"), lt = /'/g, dt = /"/g, vt = /^(?:script|style|textarea|title)$/i, Vt = (e) => (t, ...i) => ({ _$litType$: e, strings: t, values: i }), u = Vt(1), x = /* @__PURE__ */ Symbol.for("lit-noChange"), h = /* @__PURE__ */ Symbol.for("lit-nothing"), ut = /* @__PURE__ */ new WeakMap(), b = v.createTreeWalker(v, 129);
 function yt(e, t) {
   if (!Z(e) || !e.hasOwnProperty("raw")) throw Error("invalid template strings array");
   return at !== void 0 ? at.createHTML(t) : t;
 }
 const zt = (e, t) => {
   const i = e.length - 1, s = [];
-  let o, n = t === 2 ? "<svg>" : t === 3 ? "<math>" : "", r = x;
-  for (let h = 0; h < i; h++) {
-    const a = e[h];
+  let o, n = t === 2 ? "<svg>" : t === 3 ? "<math>" : "", r = S;
+  for (let c = 0; c < i; c++) {
+    const a = e[c];
     let d, p, l = -1, m = 0;
-    for (; m < a.length && (r.lastIndex = m, p = r.exec(a), p !== null); ) m = r.lastIndex, r === x ? p[1] === "!--" ? r = ht : p[1] !== void 0 ? r = ct : p[2] !== void 0 ? (vt.test(p[2]) && (o = RegExp("</" + p[2], "g")), r = _) : p[3] !== void 0 && (r = _) : r === _ ? p[0] === ">" ? (r = o ?? x, l = -1) : p[1] === void 0 ? l = -2 : (l = r.lastIndex - p[2].length, d = p[1], r = p[3] === void 0 ? _ : p[3] === '"' ? dt : lt) : r === dt || r === lt ? r = _ : r === ht || r === ct ? r = x : (r = _, o = void 0);
-    const f = r === _ && e[h + 1].startsWith("/>") ? " " : "";
-    n += r === x ? a + Rt : l >= 0 ? (s.push(d), a.slice(0, l) + $t + a.slice(l) + g + f) : a + g + (l === -2 ? h : f);
+    for (; m < a.length && (r.lastIndex = m, p = r.exec(a), p !== null); ) m = r.lastIndex, r === S ? p[1] === "!--" ? r = ct : p[1] !== void 0 ? r = ht : p[2] !== void 0 ? (vt.test(p[2]) && (o = RegExp("</" + p[2], "g")), r = _) : p[3] !== void 0 && (r = _) : r === _ ? p[0] === ">" ? (r = o ?? S, l = -1) : p[1] === void 0 ? l = -2 : (l = r.lastIndex - p[2].length, d = p[1], r = p[3] === void 0 ? _ : p[3] === '"' ? dt : lt) : r === dt || r === lt ? r = _ : r === ct || r === ht ? r = S : (r = _, o = void 0);
+    const f = r === _ && e[c + 1].startsWith("/>") ? " " : "";
+    n += r === S ? a + Rt : l >= 0 ? (s.push(d), a.slice(0, l) + bt + a.slice(l) + g + f) : a + g + (l === -2 ? c : f);
   }
   return [yt(e, n + (e[i] || "<?>") + (t === 2 ? "</svg>" : t === 3 ? "</math>" : "")), s];
 };
@@ -271,14 +271,14 @@ class I {
     let o;
     this.parts = [];
     let n = 0, r = 0;
-    const h = t.length - 1, a = this.parts, [d, p] = zt(t, i);
-    if (this.el = I.createElement(d, s), $.currentNode = this.el.content, i === 2 || i === 3) {
+    const c = t.length - 1, a = this.parts, [d, p] = zt(t, i);
+    if (this.el = I.createElement(d, s), b.currentNode = this.el.content, i === 2 || i === 3) {
       const l = this.el.content.firstChild;
       l.replaceWith(...l.childNodes);
     }
-    for (; (o = $.nextNode()) !== null && a.length < h; ) {
+    for (; (o = b.nextNode()) !== null && a.length < c; ) {
       if (o.nodeType === 1) {
-        if (o.hasAttributes()) for (const l of o.getAttributeNames()) if (l.endsWith($t)) {
+        if (o.hasAttributes()) for (const l of o.getAttributeNames()) if (l.endsWith(bt)) {
           const m = p[r++], f = o.getAttribute(l).split(g), D = /([.?@])?(.*)/.exec(m);
           a.push({ type: 1, index: n, name: D[2], strings: f, ctor: D[1] === "." ? Bt : D[1] === "?" ? qt : D[1] === "@" ? Wt : j }), o.removeAttribute(l);
         } else l.startsWith(g) && (a.push({ type: 6, index: n }), o.removeAttribute(l));
@@ -286,11 +286,11 @@ class I {
           const l = o.textContent.split(g), m = l.length - 1;
           if (m > 0) {
             o.textContent = H ? H.emptyScript : "";
-            for (let f = 0; f < m; f++) o.append(l[f], M()), $.nextNode(), a.push({ type: 2, index: ++n });
+            for (let f = 0; f < m; f++) o.append(l[f], M()), b.nextNode(), a.push({ type: 2, index: ++n });
             o.append(l[m], M());
           }
         }
-      } else if (o.nodeType === 8) if (o.data === bt) a.push({ type: 2, index: n });
+      } else if (o.nodeType === 8) if (o.data === $t) a.push({ type: 2, index: n });
       else {
         let l = -1;
         for (; (l = o.data.indexOf(g, l + 1)) !== -1; ) a.push({ type: 7, index: n }), l += g.length - 1;
@@ -303,11 +303,11 @@ class I {
     return s.innerHTML = t, s;
   }
 }
-function S(e, t, i = e, s) {
-  if (t === k) return t;
+function k(e, t, i = e, s) {
+  if (t === x) return t;
   let o = s !== void 0 ? i._$Co?.[s] : i._$Cl;
   const n = P(t) ? void 0 : t._$litDirective$;
-  return o?.constructor !== n && (o?._$AO?.(!1), n === void 0 ? o = void 0 : (o = new n(e), o._$AT(e, i, s)), s !== void 0 ? (i._$Co ??= [])[s] = o : i._$Cl = o), o !== void 0 && (t = S(e, o._$AS(e, t.values), o, s)), t;
+  return o?.constructor !== n && (o?._$AO?.(!1), n === void 0 ? o = void 0 : (o = new n(e), o._$AT(e, i, s)), s !== void 0 ? (i._$Co ??= [])[s] = o : i._$Cl = o), o !== void 0 && (t = k(e, o._$AS(e, t.values), o, s)), t;
 }
 class jt {
   constructor(t, i) {
@@ -321,16 +321,16 @@ class jt {
   }
   u(t) {
     const { el: { content: i }, parts: s } = this._$AD, o = (t?.creationScope ?? v).importNode(i, !0);
-    $.currentNode = o;
-    let n = $.nextNode(), r = 0, h = 0, a = s[0];
+    b.currentNode = o;
+    let n = b.nextNode(), r = 0, c = 0, a = s[0];
     for (; a !== void 0; ) {
       if (r === a.index) {
         let d;
-        a.type === 2 ? d = new U(n, n.nextSibling, this, t) : a.type === 1 ? d = new a.ctor(n, a.name, a.strings, this, t) : a.type === 6 && (d = new Gt(n, this, t)), this._$AV.push(d), a = s[++h];
+        a.type === 2 ? d = new U(n, n.nextSibling, this, t) : a.type === 1 ? d = new a.ctor(n, a.name, a.strings, this, t) : a.type === 6 && (d = new Gt(n, this, t)), this._$AV.push(d), a = s[++c];
       }
-      r !== a?.index && (n = $.nextNode(), r++);
+      r !== a?.index && (n = b.nextNode(), r++);
     }
-    return $.currentNode = v, o;
+    return b.currentNode = v, o;
   }
   p(t) {
     let i = 0;
@@ -342,7 +342,7 @@ class U {
     return this._$AM?._$AU ?? this._$Cv;
   }
   constructor(t, i, s, o) {
-    this.type = 2, this._$AH = c, this._$AN = void 0, this._$AA = t, this._$AB = i, this._$AM = s, this.options = o, this._$Cv = o?.isConnected ?? !0;
+    this.type = 2, this._$AH = h, this._$AN = void 0, this._$AA = t, this._$AB = i, this._$AM = s, this.options = o, this._$Cv = o?.isConnected ?? !0;
   }
   get parentNode() {
     let t = this._$AA.parentNode;
@@ -356,7 +356,7 @@ class U {
     return this._$AB;
   }
   _$AI(t, i = this) {
-    t = S(this, t, i), P(t) ? t === c || t == null || t === "" ? (this._$AH !== c && this._$AR(), this._$AH = c) : t !== this._$AH && t !== k && this._(t) : t._$litType$ !== void 0 ? this.$(t) : t.nodeType !== void 0 ? this.T(t) : Ht(t) ? this.k(t) : this._(t);
+    t = k(this, t, i), P(t) ? t === h || t == null || t === "" ? (this._$AH !== h && this._$AR(), this._$AH = h) : t !== this._$AH && t !== x && this._(t) : t._$litType$ !== void 0 ? this.$(t) : t.nodeType !== void 0 ? this.T(t) : Ht(t) ? this.k(t) : this._(t);
   }
   O(t) {
     return this._$AA.parentNode.insertBefore(t, this._$AB);
@@ -365,7 +365,7 @@ class U {
     this._$AH !== t && (this._$AR(), this._$AH = this.O(t));
   }
   _(t) {
-    this._$AH !== c && P(this._$AH) ? this._$AA.nextSibling.data = t : this.T(v.createTextNode(t)), this._$AH = t;
+    this._$AH !== h && P(this._$AH) ? this._$AA.nextSibling.data = t : this.T(v.createTextNode(t)), this._$AH = t;
   }
   $(t) {
     const { values: i, _$litType$: s } = t, o = typeof s == "number" ? this._$AC(t) : (s.el === void 0 && (s.el = I.createElement(yt(s.h, s.h[0]), this.options)), s);
@@ -404,21 +404,21 @@ class j {
     return this._$AM._$AU;
   }
   constructor(t, i, s, o, n) {
-    this.type = 1, this._$AH = c, this._$AN = void 0, this.element = t, this.name = i, this._$AM = o, this.options = n, s.length > 2 || s[0] !== "" || s[1] !== "" ? (this._$AH = Array(s.length - 1).fill(new String()), this.strings = s) : this._$AH = c;
+    this.type = 1, this._$AH = h, this._$AN = void 0, this.element = t, this.name = i, this._$AM = o, this.options = n, s.length > 2 || s[0] !== "" || s[1] !== "" ? (this._$AH = Array(s.length - 1).fill(new String()), this.strings = s) : this._$AH = h;
   }
   _$AI(t, i = this, s, o) {
     const n = this.strings;
     let r = !1;
-    if (n === void 0) t = S(this, t, i, 0), r = !P(t) || t !== this._$AH && t !== k, r && (this._$AH = t);
+    if (n === void 0) t = k(this, t, i, 0), r = !P(t) || t !== this._$AH && t !== x, r && (this._$AH = t);
     else {
-      const h = t;
+      const c = t;
       let a, d;
-      for (t = n[0], a = 0; a < n.length - 1; a++) d = S(this, h[s + a], i, a), d === k && (d = this._$AH[a]), r ||= !P(d) || d !== this._$AH[a], d === c ? t = c : t !== c && (t += (d ?? "") + n[a + 1]), this._$AH[a] = d;
+      for (t = n[0], a = 0; a < n.length - 1; a++) d = k(this, c[s + a], i, a), d === x && (d = this._$AH[a]), r ||= !P(d) || d !== this._$AH[a], d === h ? t = h : t !== h && (t += (d ?? "") + n[a + 1]), this._$AH[a] = d;
     }
     r && !o && this.j(t);
   }
   j(t) {
-    t === c ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, t ?? "");
+    t === h ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, t ?? "");
   }
 }
 class Bt extends j {
@@ -426,7 +426,7 @@ class Bt extends j {
     super(...arguments), this.type = 3;
   }
   j(t) {
-    this.element[this.name] = t === c ? void 0 : t;
+    this.element[this.name] = t === h ? void 0 : t;
   }
 }
 class qt extends j {
@@ -434,7 +434,7 @@ class qt extends j {
     super(...arguments), this.type = 4;
   }
   j(t) {
-    this.element.toggleAttribute(this.name, !!t && t !== c);
+    this.element.toggleAttribute(this.name, !!t && t !== h);
   }
 }
 class Wt extends j {
@@ -442,8 +442,8 @@ class Wt extends j {
     super(t, i, s, o, n), this.type = 5;
   }
   _$AI(t, i = this) {
-    if ((t = S(this, t, i, 0) ?? c) === k) return;
-    const s = this._$AH, o = t === c && s !== c || t.capture !== s.capture || t.once !== s.once || t.passive !== s.passive, n = t !== c && (s === c || o);
+    if ((t = k(this, t, i, 0) ?? h) === x) return;
+    const s = this._$AH, o = t === h && s !== h || t.capture !== s.capture || t.once !== s.once || t.passive !== s.passive, n = t !== h && (s === h || o);
     o && this.element.removeEventListener(this.name, this, s), n && this.element.addEventListener(this.name, this, t), this._$AH = t;
   }
   handleEvent(t) {
@@ -458,7 +458,7 @@ class Gt {
     return this._$AM._$AU;
   }
   _$AI(t) {
-    S(this, t);
+    k(this, t);
   }
 }
 const Kt = Q.litHtmlPolyfillSupport;
@@ -492,7 +492,7 @@ class w extends A {
     super.disconnectedCallback(), this._$Do?.setConnected(!1);
   }
   render() {
-    return k;
+    return x;
   }
 }
 w._$litElement$ = !0, w.finalized = !0, X.litElementHydrateSupport?.({ LitElement: w });
@@ -509,18 +509,18 @@ const Jt = { attribute: !0, type: String, converter: R, reflect: !1, hasChanged:
   let n = globalThis.litPropertyMetadata.get(o);
   if (n === void 0 && globalThis.litPropertyMetadata.set(o, n = /* @__PURE__ */ new Map()), s === "setter" && ((e = Object.create(e)).wrapped = !0), n.set(i.name, e), s === "accessor") {
     const { name: r } = i;
-    return { set(h) {
+    return { set(c) {
       const a = t.get.call(this);
-      t.set.call(this, h), this.requestUpdate(r, a, e, !0, h);
-    }, init(h) {
-      return h !== void 0 && this.C(r, void 0, e, h), h;
+      t.set.call(this, c), this.requestUpdate(r, a, e, !0, c);
+    }, init(c) {
+      return c !== void 0 && this.C(r, void 0, e, c), c;
     } };
   }
   if (s === "setter") {
     const { name: r } = i;
-    return function(h) {
+    return function(c) {
       const a = this[r];
-      t.call(this, h), this.requestUpdate(r, a, e, !0, h);
+      t.call(this, c), this.requestUpdate(r, a, e, !0, c);
     };
   }
   throw Error("Unsupported decorator location: " + s);
@@ -535,13 +535,13 @@ function B(e) {
   return Y({ ...e, state: !0, attribute: !1 });
 }
 const wt = "baby-monitor-kiosk-card:", tt = (e) => wt + e;
-function b(e) {
+function $(e) {
   return localStorage.getItem(tt(e)) === "paired";
 }
-function kt(e) {
+function xt(e) {
   localStorage.setItem(tt(e), "paired");
 }
-function St(e) {
+function kt(e) {
   localStorage.removeItem(tt(e));
 }
 function pt(e) {
@@ -573,9 +573,9 @@ let N = class extends w {
     const e = this.config;
     if (!e) return u``;
     const t = e.id ?? `${e.camera ?? e.stream}|${e.sound_sensor}`, i = (s, o, n) => u`<label><input type=checkbox .checked=${n} @change=${(r) => this.set(s, r.target.checked)}> ${o}</label>`;
-    return u`<div class=grid><label>Naam/ID<input .value=${e.id ?? ""} @change=${(s) => this.set("id", s.target.value)}></label>${this.entity("camera", "Camera entity", e.camera ?? "", ["camera"])}<label>go2rtc/WebRTC stream<input .value=${e.stream ?? ""} @change=${(s) => this.set("stream", s.target.value)}></label>${this.entity("sound_sensor", "Geluidsensor", e.sound_sensor ?? "", ["sensor", "binary_sensor"])}${[["sound_threshold_db", "Activeringsgrens dB"], ["sound_reset_db", "Resetgrens dB"], ["trigger_for", "Minimale geluidsduur (s)"], ["silence_duration", "Stiltetijd (s)"], ["manual_close_cooldown", "Cooldown handmatig sluiten (s)"]].map(([s, o]) => u`<label>${o}<input type=number .value=${String(e[s] ?? "")} @change=${(n) => this.set(s, Number(n.target.value))}></label>`)}${i("preload", "Stream voorverwarmen", e.preload !== !1)}${i("auto_open", "Automatisch openen", e.auto_open !== !1)}${i("kiosk.enabled", "Kioskmodus", e.kiosk?.enabled !== !1)}${i("kiosk.device_bound", "Alleen gekoppeld apparaat", e.kiosk?.device_bound !== !1)}<label>Toegestane HA-user-ID’s (komma-gescheiden)<input .value=${e.kiosk?.allowed_user_ids?.join(", ") ?? ""} @change=${(s) => this.set("kiosk.allowed_user_ids", s.target.value.split(",").map((o) => o.trim()).filter(Boolean))}></label>${i("audio.default_muted", "Standaard gedempt", e.audio?.default_muted ?? !1)}${i("audio.remember_state", "Audiostatus onthouden", e.audio?.remember_state !== !1)}${i("controls.mute", "Mute-knop tonen", e.controls?.mute !== !1)}${i("controls.close", "Sluitknop tonen", e.controls?.close !== !1)}${i("controls.volume", "Volumeknoppen tonen", e.controls?.volume ?? !1)}${i("controls.brightness", "Helderheidsknoppen tonen", e.controls?.brightness ?? !1)}${i("debug", "Debugstatus", !!e.debug)}<label>Companion notify service<input .value=${e.companion?.notify_service ?? ""} @change=${(s) => this.set("companion.notify_service", s.target.value)}></label>${[["active_brightness", "Actieve helderheid"], ["idle_brightness", "Rusthelderheid"], ["active_volume", "Actief volume"], ["idle_volume", "Rustvolume"]].map(([s, o]) => u`<label>${o}<input type=number min=0 max=100 .value=${String(e.companion?.[s] ?? "")} @change=${(n) => this.set(`companion.${s}`, Number(n.target.value))}></label>`)}<div class=pair><b>Dit apparaat gekoppeld: ${b(t) ? "ja" : "nee"}</b><button @click=${() => {
-      b(t) ? St(t) : kt(t), this.requestUpdate();
-    }}>${b(t) ? "Ontkoppel" : "Koppel dit apparaat"}</button></div></div>`;
+    return u`<div class=grid><label>Naam/ID<input .value=${e.id ?? ""} @change=${(s) => this.set("id", s.target.value)}></label>${this.entity("camera", "Camera entity", e.camera ?? "", ["camera"])}<label>go2rtc/WebRTC stream<input .value=${e.stream ?? ""} @change=${(s) => this.set("stream", s.target.value)}></label>${this.entity("sound_sensor", "Geluidsensor", e.sound_sensor ?? "", ["sensor", "binary_sensor"])}${[["sound_threshold_db", "Activeringsgrens dB"], ["sound_reset_db", "Resetgrens dB"], ["trigger_for", "Minimale geluidsduur (s)"], ["silence_duration", "Stiltetijd (s)"], ["manual_close_cooldown", "Cooldown handmatig sluiten (s)"]].map(([s, o]) => u`<label>${o}<input type=number .value=${String(e[s] ?? "")} @change=${(n) => this.set(s, Number(n.target.value))}></label>`)}${i("preload", "Stream voorverwarmen", e.preload !== !1)}${i("auto_open", "Automatisch openen", e.auto_open !== !1)}${i("kiosk.enabled", "Kioskmodus", e.kiosk?.enabled !== !1)}${i("kiosk.device_bound", "Alleen gekoppeld apparaat", e.kiosk?.device_bound !== !1)}<label>Toegestane HA-user-ID’s (komma-gescheiden)<input .value=${e.kiosk?.allowed_user_ids?.join(", ") ?? ""} @change=${(s) => this.set("kiosk.allowed_user_ids", s.target.value.split(",").map((o) => o.trim()).filter(Boolean))}></label>${i("audio.default_muted", "Standaard gedempt", e.audio?.default_muted ?? !1)}${i("audio.remember_state", "Audiostatus onthouden", e.audio?.remember_state !== !1)}${i("controls.mute", "Mute-knop tonen", e.controls?.mute !== !1)}${i("controls.close", "Sluitknop tonen", e.controls?.close !== !1)}${i("controls.volume", "Volumeknoppen tonen", e.controls?.volume ?? !1)}${i("controls.brightness", "Helderheidsknoppen tonen", e.controls?.brightness ?? !1)}${i("debug", "Debugstatus", !!e.debug)}<label>Companion notify service<input .value=${e.companion?.notify_service ?? ""} @change=${(s) => this.set("companion.notify_service", s.target.value)}></label>${[["active_brightness", "Actieve helderheid"], ["idle_brightness", "Rusthelderheid"], ["active_volume", "Actief volume"], ["idle_volume", "Rustvolume"]].map(([s, o]) => u`<label>${o}<input type=number min=0 max=100 .value=${String(e.companion?.[s] ?? "")} @change=${(n) => this.set(`companion.${s}`, Number(n.target.value))}></label>`)}<div class=pair><b>Dit apparaat gekoppeld: ${$(t) ? "ja" : "nee"}</b><button @click=${() => {
+      $(t) ? kt(t) : xt(t), this.requestUpdate();
+    }}>${$(t) ? "Ontkoppel" : "Koppel dit apparaat"}</button></div></div>`;
   }
 };
 N.styles = _t`:host{display:block;padding:16px}.grid{display:grid;gap:12px}label{display:grid;gap:4px}input{padding:8px}.pair{display:flex;gap:8px;align-items:center}button{padding:10px}`;
@@ -679,12 +679,12 @@ function se(e, t, i) {
 function oe(e, t = "", i = 0) {
   return /iPad|iPhone|iPod/i.test(e) || t === "MacIntel" && i > 1;
 }
-const xt = /* @__PURE__ */ new Set();
+const St = /* @__PURE__ */ new Set();
 function G(e) {
-  return xt.has(e);
+  return St.has(e);
 }
 function ne(e) {
-  xt.add(e);
+  St.add(e);
 }
 var re = Object.defineProperty, ae = Object.getOwnPropertyDescriptor, L = (e, t, i, s) => {
   for (var o = s > 1 ? void 0 : s ? ae(t, i) : t, n = e.length - 1, r; n >= 0; n--)
@@ -763,7 +763,7 @@ let y = class extends w {
     ne(this.configId), this.automaticAudio = !0, this.muted = !1, this.applyVideoMuted(this.camera, !1), this.playVideos(this.camera), this.active() || setTimeout(() => this.muteVideo(), 150), this.requestUpdate();
   }
   eligible() {
-    return this.config.kiosk?.enabled !== !1 && (this.config.kiosk?.device_bound === !1 || b(this.configId)) && (!this.config.kiosk?.allowed_user_ids?.length || !!this.hass?.user && this.config.kiosk.allowed_user_ids.includes(this.hass.user.id));
+    return this.config.kiosk?.enabled !== !1 && (this.config.kiosk?.device_bound === !1 || $(this.configId)) && (!this.config.kiosk?.allowed_user_ids?.length || !!this.hass?.user && this.config.kiosk.allowed_user_ids.includes(this.hass.user.id));
   }
   active() {
     return this.config.auto_open !== !1 && this.eligible() && (this.machineState === "ACTIVE" || this.machineState === "SILENCE_TIMER");
@@ -802,18 +802,18 @@ let y = class extends w {
     if (!this.camera || !W(this.configId, this)) return;
     this.portal || (this.portal = document.createElement("div"), this.portal.dataset.babyMonitorKiosk = this.configId, document.body.append(this.portal));
     const e = this.active(), t = this.config.preload !== !1 && this.eligible();
-    this.portal.style.cssText = e ? "position:fixed;inset:0;z-index:2147483000;opacity:1;pointer-events:auto;background:#000;display:grid;place-items:center;overflow:hidden;" : "position:fixed;inset:0;z-index:-1;opacity:.001;pointer-events:none;background:#000;display:grid;place-items:center;overflow:hidden;", At(e || t ? u`<style>.cam{width:100%;height:100%;min-width:100vw;min-height:100vh}.controls{position:absolute;left:50%;bottom:max(24px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:12px;flex-wrap:wrap;justify-content:center}.controls button{width:68px;height:68px;border:0;border-radius:50%;font-size:25px;background:#111c;color:#fff}</style><div class=cam>${this.camera}</div>${e ? u`<div class=controls>${this.config.controls?.brightness ? u`<button aria-label="Helderheid lager" @click=${() => this.kioskLevel("brightness", -20)}>☀−</button><button aria-label="Helderheid hoger" @click=${() => this.kioskLevel("brightness", 20)}>☀+</button>` : c}${this.config.controls?.volume ? u`<button aria-label="Volume lager" @click=${() => this.kioskLevel("volume", -20)}>−🔊</button><button aria-label="Volume hoger" @click=${() => this.kioskLevel("volume", 20)}>+🔊</button>` : c}${this.config.controls?.mute !== !1 ? u`<button aria-label=${this.muted ? "Geluid aan" : "Geluid uit"} @click=${() => this.toggleMute()}>${this.muted ? "🔇" : "🔊"}</button>` : c}${this.config.controls?.close !== !1 ? u`<button aria-label="Sluiten" @click=${() => this.runtime?.close()}>✕</button>` : c}</div>` : c}` : c, this.portal);
+    this.portal.style.cssText = e ? "position:fixed;inset:0;z-index:2147483000;opacity:1;pointer-events:auto;background:#000;display:grid;place-items:center;overflow:hidden;" : "position:fixed;inset:0;z-index:-1;opacity:.001;pointer-events:none;background:#000;display:grid;place-items:center;overflow:hidden;", At(e || t ? u`<style>.cam{width:100%;height:100%;min-width:100vw;min-height:100vh}.controls{position:absolute;left:50%;bottom:max(24px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:12px;flex-wrap:wrap;justify-content:center}.controls button{width:68px;height:68px;border:0;border-radius:50%;font-size:25px;background:#111c;color:#fff}</style><div class=cam>${this.camera}</div>${e ? u`<div class=controls>${this.config.controls?.brightness ? u`<button aria-label="Helderheid lager" @click=${() => this.kioskLevel("brightness", -20)}>☀−</button><button aria-label="Helderheid hoger" @click=${() => this.kioskLevel("brightness", 20)}>☀+</button>` : h}${this.config.controls?.volume ? u`<button aria-label="Volume lager" @click=${() => this.kioskLevel("volume", -20)}>−🔊</button><button aria-label="Volume hoger" @click=${() => this.kioskLevel("volume", 20)}>+🔊</button>` : h}${this.config.controls?.mute !== !1 ? u`<button aria-label=${this.muted ? "Geluid aan" : "Geluid uit"} @click=${() => this.toggleMute()}>${this.muted ? "🔇" : "🔊"}</button>` : h}${this.config.controls?.close !== !1 ? u`<button aria-label="Sluiten" @click=${() => this.runtime?.close()}>✕</button>` : h}</div>` : h}` : h, this.portal);
   }
   togglePair() {
-    b(this.configId) ? St(this.configId) : kt(this.configId), b(this.configId) && this.ensureCamera(), this.requestUpdate();
+    $(this.configId) ? kt(this.configId) : xt(this.configId), $(this.configId) && this.ensureCamera(), this.requestUpdate();
   }
   render() {
-    if (!this.config) return c;
-    const e = this.hass?.states[this.config.sound_sensor]?.state ?? "?", t = b(this.configId), i = t && this.automaticAudio;
-    return u`${this.config.show_setup ? u`<ha-card class="setup"><div class="monitor-icon"><ha-icon icon="mdi:baby-face-outline"></ha-icon></div><div class="copy"><div class="title">Baby Monitor</div><div class="status"><span class="dot ${i ? "ok" : ""}"></span>${t ? this.automaticAudio ? "Klaar · automatisch geluid" : "Gekoppeld · tik voor geluid" : "Niet gekoppeld"}</div></div><div class="actions">${t && !this.automaticAudio ? u`<button class="icon-button primary" title="Automatisch camerageluid inschakelen" aria-label="Automatisch camerageluid inschakelen" @click=${() => this.enableAutomaticAudio()}><ha-icon icon="mdi:volume-high"></ha-icon></button>` : c}<button class="icon-button" title=${t ? "Dit apparaat ontkoppelen" : "Dit apparaat koppelen"} aria-label=${t ? "Dit apparaat ontkoppelen" : "Dit apparaat koppelen"} @click=${() => this.togglePair()}><ha-icon icon=${t ? "mdi:link-variant" : "mdi:link-variant-plus"}></ha-icon></button></div></ha-card>` : c}${!this.active() && this.config.preload === !1 ? u`<span class=idle>Baby monitor gereed</span>` : c}${this.config.debug ? u`<div class=debug>state=${this.machineState} | value=${e} | on≥${this.config.sound_threshold_db ?? "-"} | off≤${this.config.sound_reset_db ?? "-"} | timer=${Math.ceil((this.runtime?.remainingMs() ?? 0) / 1e3)}s | kiosk=${this.eligible()} | preload=${this.config.preload !== !1 && this.eligible()}</div>` : c}`;
+    if (!this.config) return h;
+    const e = this.hass?.states[this.config.sound_sensor]?.state ?? "?", t = $(this.configId), i = t && this.automaticAudio;
+    return u`${this.config.show_setup ? u`<ha-card class="setup"><div class="monitor-icon ${i ? "ready" : ""}"><ha-icon icon="mdi:baby-face-outline"></ha-icon></div><div class="copy"><div class="title">Baby Monitor</div><div class="status"><span class="dot ${i ? "ok" : ""}"></span>${t ? this.automaticAudio ? "Klaar · automatisch geluid" : "Gekoppeld · tik voor geluid" : "Niet gekoppeld"}</div></div><div class="actions">${t && !this.automaticAudio ? u`<button class="icon-button primary" title="Automatisch camerageluid inschakelen" aria-label="Automatisch camerageluid inschakelen" @click=${() => this.enableAutomaticAudio()}><ha-icon icon="mdi:volume-high"></ha-icon></button>` : h}<button class="icon-button" title=${t ? "Dit apparaat ontkoppelen" : "Dit apparaat koppelen"} aria-label=${t ? "Dit apparaat ontkoppelen" : "Dit apparaat koppelen"} @click=${() => this.togglePair()}><ha-icon icon=${t ? "mdi:link-variant" : "mdi:link-variant-plus"}></ha-icon></button></div></ha-card>` : h}${!this.active() && this.config.preload === !1 ? u`<span class=idle>Baby monitor gereed</span>` : h}${this.config.debug ? u`<div class=debug>state=${this.machineState} | value=${e} | on≥${this.config.sound_threshold_db ?? "-"} | off≤${this.config.sound_reset_db ?? "-"} | timer=${Math.ceil((this.runtime?.remainingMs() ?? 0) / 1e3)}s | kiosk=${this.eligible()} | preload=${this.config.preload !== !1 && this.eligible()}</div>` : h}`;
   }
 };
-y.styles = _t`:host{display:block;min-height:1px}ha-card.setup{min-height:72px;padding:10px 12px;box-sizing:border-box;display:flex;align-items:center;gap:11px;overflow:hidden}.monitor-icon{width:42px;height:42px;flex:0 0 42px;border-radius:13px;display:grid;place-items:center;color:var(--state-icon-color,var(--primary-color));background:color-mix(in srgb,var(--state-icon-color,var(--primary-color)) 14%,transparent)}.monitor-icon ha-icon{--mdc-icon-size:24px}.copy{min-width:0;flex:1;line-height:1.2}.title{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.status{margin-top:5px;display:flex;align-items:center;gap:6px;color:var(--secondary-text-color);font-size:12px;white-space:nowrap}.dot{width:7px;height:7px;border-radius:50%;background:var(--warning-color,#ff9800)}.dot.ok{background:var(--success-color,#4caf50)}.actions{display:flex;gap:5px;flex:0 0 auto}.icon-button{width:38px;height:38px;border:0;border-radius:12px;display:grid;place-items:center;background:var(--secondary-background-color);color:var(--primary-text-color);cursor:pointer}.icon-button.primary{color:var(--primary-color);background:color-mix(in srgb,var(--primary-color) 14%,var(--card-background-color))}.icon-button ha-icon{--mdc-icon-size:21px}.stage{position:fixed;inset:0;z-index:2147483000;background:#000;display:grid;place-items:center}.stage>*:first-child{width:100%;height:100%}.controls{position:absolute;left:50%;bottom:max(24px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:18px}.controls button{width:68px;height:68px;border:0;border-radius:50%;font-size:28px;background:#111c;color:white}.preload{position:fixed;width:2px;height:2px;opacity:.01;pointer-events:none;overflow:hidden;left:-4px;top:-4px}.debug{position:fixed;z-index:2147483001;top:8px;left:8px;background:#000b;color:#fff;padding:8px;font:14px monospace}.idle{font-size:12px;color:var(--secondary-text-color)}`;
+y.styles = _t`:host{display:block;min-height:1px;container-type:inline-size}ha-card.setup{min-height:72px;padding:10px 12px;box-sizing:border-box;display:flex;align-items:center;gap:11px;overflow:hidden}.monitor-icon{position:relative;width:42px;height:42px;flex:0 0 42px;border-radius:13px;display:grid;place-items:center;color:var(--state-icon-color,var(--primary-color));background:color-mix(in srgb,var(--state-icon-color,var(--primary-color)) 14%,transparent)}.monitor-icon::after{content:'';position:absolute;right:-2px;bottom:-2px;width:9px;height:9px;border:2px solid var(--card-background-color,#fff);border-radius:50%;background:var(--warning-color,#ff9800)}.monitor-icon.ready::after{background:var(--success-color,#4caf50)}.monitor-icon ha-icon{--mdc-icon-size:24px}.copy{min-width:0;flex:1;line-height:1.2}.title{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.status{margin-top:5px;display:flex;align-items:center;gap:6px;color:var(--secondary-text-color);font-size:12px;white-space:nowrap}.dot{width:7px;height:7px;border-radius:50%;background:var(--warning-color,#ff9800)}.dot.ok{background:var(--success-color,#4caf50)}.actions{display:flex;gap:5px;flex:0 0 auto}.icon-button{width:38px;height:38px;border:0;border-radius:12px;display:grid;place-items:center;background:var(--secondary-background-color);color:var(--primary-text-color);cursor:pointer}.icon-button.primary{color:var(--primary-color);background:color-mix(in srgb,var(--primary-color) 14%,var(--card-background-color))}.icon-button ha-icon{--mdc-icon-size:21px}@container (max-width:250px){ha-card.setup{padding:10px;gap:8px}.copy{display:none}.actions{margin-left:auto}}.stage{position:fixed;inset:0;z-index:2147483000;background:#000;display:grid;place-items:center}.stage>*:first-child{width:100%;height:100%}.controls{position:absolute;left:50%;bottom:max(24px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:18px}.controls button{width:68px;height:68px;border:0;border-radius:50%;font-size:28px;background:#111c;color:white}.preload{position:fixed;width:2px;height:2px;opacity:.01;pointer-events:none;overflow:hidden;left:-4px;top:-4px}.debug{position:fixed;z-index:2147483001;top:8px;left:8px;background:#000b;color:#fff;padding:8px;font:14px monospace}.idle{font-size:12px;color:var(--secondary-text-color)}`;
 L([
   Y({ attribute: !1 })
 ], y.prototype, "hass", 2);
@@ -831,5 +831,5 @@ y = L([
 ], y);
 window.customCards = window.customCards || [];
 window.customCards.push({ type: "baby-monitor-kiosk-card", name: "Baby Monitor Kiosk Card", description: "Device-local sound-triggered preloaded WebRTC baby monitor" });
-console.info("%c BABY-MONITOR-KIOSK-CARD %c 0.3.0 ", "color:white;background:#3949ab;font-weight:bold", "color:#3949ab;background:white");
+console.info("%c BABY-MONITOR-KIOSK-CARD %c 0.3.1 ", "color:white;background:#3949ab;font-weight:bold", "color:#3949ab;background:white");
 //# sourceMappingURL=baby-monitor-kiosk-card.js.map
