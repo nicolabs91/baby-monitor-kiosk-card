@@ -693,7 +693,7 @@ let C = class extends E {
     const t = e.id ?? `${e.camera ?? e.stream}|${e.sound_sensor}`;
     this.config && this.configId !== t && (this.unsubscribe?.(), ft(this.configId, this), this.portal?.remove(), this.portal = void 0, this.camera = void 0, this.cameraSignature = ""), this.config = { ...A, ...e }, this.id = this.configId, this.currentBrightness = e.companion?.active_brightness ?? 100, this.currentVolume = e.companion?.active_volume ?? 100;
     const s = e.audio?.remember_state === !1 ? null : localStorage.getItem(ut(this.configId));
-    this.muted = s === null ? e.audio?.default_muted ?? !1 : s === "true", this.connectRuntime(), this.ensureCamera(), this.configureCamera();
+    this.muted = s === null ? e.audio?.default_muted ?? !1 : s === "true", this.connectRuntime(), this.isConnected && (this.ensureCamera(), this.configureCamera());
   }
   get configId() {
     return this.config?.id ?? `${this.config?.camera ?? this.config?.stream}|${this.config?.sound_sensor}`;
@@ -704,7 +704,7 @@ let C = class extends E {
     });
   }
   connectedCallback() {
-    super.connectedCallback(), this.config && this.connectRuntime();
+    super.connectedCallback(), this.config && (this.connectRuntime(), this.ensureCamera(), this.configureCamera());
   }
   disconnectedCallback() {
     super.disconnectedCallback(), this.unsubscribe?.(), this.unsubscribe = void 0, this.portal?.remove(), this.portal = void 0, ft(this.configId, this);
@@ -720,7 +720,7 @@ let C = class extends E {
     this.camera && t !== this.cameraSignature && (this.camera.setConfig?.(e), this.cameraSignature = t);
   }
   ensureCamera() {
-    this.camera || !this.config || !this.eligible() || !W(this.configId, this) || (this.camera = document.createElement("webrtc-camera"), this.camera.style.cssText = "display:block;width:100%;height:100%;object-fit:contain", this.configureCamera());
+    !this.isConnected || this.camera || !this.config || !this.eligible() || !W(this.configId, this) || (this.camera = document.createElement("webrtc-camera"), this.camera.style.cssText = "display:block;width:100%;height:100%;object-fit:contain", this.configureCamera());
   }
   eligible() {
     return this.config.kiosk?.enabled !== !1 && (this.config.kiosk?.device_bound === !1 || b(this.configId)) && (!this.config.kiosk?.allowed_user_ids?.length || !!this.hass?.user && this.config.kiosk.allowed_user_ids.includes(this.hass.user.id));
