@@ -5,3 +5,7 @@ export function initialMuted(preload:boolean,stored:string|null,defaultMuted:boo
   if(preload)return true;
   return stored===null?defaultMuted:stored==='true';
 }
+
+export function needsFreshVideoOnActivation(userAgent:string,platform='',touchPoints=0){
+  return /iPad|iPhone|iPod/i.test(userAgent)||(platform==='MacIntel'&&touchPoints>1);
+}
