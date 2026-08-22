@@ -731,11 +731,14 @@ let C = class extends E {
   toggleMute() {
     this.muted = !this.muted, this.config.audio?.remember_state !== !1 && localStorage.setItem(ut(this.configId), String(this.muted)), this.configureCamera(), this.requestUpdate();
   }
+  silentCommand(e = {}) {
+    return { ...e, presentation_options: [], push: { "interruption-level": "passive" } };
+  }
   async companion(e) {
     const t = this.config.companion?.notify_service;
     if (!t || !this.eligible() || !this.hass) return;
     const s = e ? this.config.companion?.active_brightness : this.config.companion?.idle_brightness, i = e ? this.config.companion?.active_volume : this.config.companion?.idle_volume, o = [];
-    e && o.push({ message: "kiosk_hide_screensaver" }), s != null && o.push({ message: "kiosk_set_brightness", data: { level: s } }), i != null && o.push({ message: "kiosk_set_volume", data: { volume: i } }), e || o.push({ message: "kiosk_show_screensaver" });
+    e && o.push({ message: "kiosk_hide_screensaver", data: this.silentCommand() }), s != null && o.push({ message: "kiosk_set_brightness", data: this.silentCommand({ level: s }) }), i != null && o.push({ message: "kiosk_set_volume", data: this.silentCommand({ volume: i }) }), e || o.push({ message: "kiosk_show_screensaver", data: this.silentCommand() });
     for (const n of o) try {
       await this.hass.callService("notify", t, n);
     } catch (r) {
@@ -747,7 +750,7 @@ let C = class extends E {
     if (!s || !this.hass) return;
     const i = Math.max(0, Math.min(100, (e === "brightness" ? this.currentBrightness : this.currentVolume) + t));
     e === "brightness" ? this.currentBrightness = i : this.currentVolume = i;
-    const o = e === "brightness" ? "kiosk_set_brightness" : "kiosk_set_volume", n = e === "brightness" ? { level: i } : { volume: i };
+    const o = e === "brightness" ? "kiosk_set_brightness" : "kiosk_set_volume", n = this.silentCommand(e === "brightness" ? { level: i } : { volume: i });
     try {
       await this.hass.callService("notify", s, { message: o, data: n });
     } catch (r) {
