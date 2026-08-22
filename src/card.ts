@@ -4,7 +4,7 @@ import type { CardConfig, Hass, MachineState } from "./types";
 import { defaults } from "./types";
 import { runtimeFor, claimOwner, releaseOwner } from "./runtime";
 import { audioKey, isPaired, pair, unpair } from "./device";
-import { initialMuted, isAutomaticAudioUnlocked, needsFreshVideoOnActivation, unlockAutomaticAudio } from "./audio";
+import { initialMuted, isAutomaticAudioUnlocked, shouldRefreshVideoOnActivation, unlockAutomaticAudio } from "./audio";
 @customElement("baby-monitor-kiosk-card")
 export class Card extends LitElement {
   @property({ attribute: false }) hass?: Hass;
@@ -301,19 +301,30 @@ export class Card extends LitElement {
     await this.updateComplete;
     const nav = globalThis.navigator;
     this.automaticAudio = isAutomaticAudioUnlocked(this.configId);
-    this.muted = !this.automaticAudio;
+    const restoreAudio = this.automaticAudio;
+    // Always resume iOS video muted first. Setting muted=false before play()
+    // makes WebKit reject playback and leaves the WebRTC surface black.
+    this.muted = true;
+    this.applyVideoMuted(this.camera, true);
     this.requestUpdate();
-    if (nav && needsFreshVideoOnActivation(nav.userAgent, nav.platform, nav.maxTouchPoints) && !this.automaticAudio) {
+    if (nav && shouldRefreshVideoOnActivation(nav.userAgent, nav.platform, nav.maxTouchPoints, restoreAudio, this.manualActivation)) {
       this.camera?.remove();
       this.camera = undefined;
       this.cameraSignature = "";
-      this.ensureCamera();
+      this.ensureCamera(this.manualActivation);
       if (this.camera) this.camera.hass = this.hass;
       this.syncPortal();
     }
     requestAnimationFrame(() => {
       this.playVideos(this.camera);
-      setTimeout(() => this.playVideos(this.camera), 300);
+      setTimeout(() => {
+        this.playVideos(this.camera);
+        if (restoreAudio) {
+          this.muted = false;
+          this.applyVideoMuted(this.camera, false);
+          this.requestUpdate();
+        }
+      }, 300);
     });
   }
   private playVideos(root: any) {

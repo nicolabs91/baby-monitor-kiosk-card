@@ -10,6 +10,10 @@ export function needsFreshVideoOnActivation(userAgent:string,platform='',touchPo
   return /iPad|iPhone|iPod/i.test(userAgent)||(platform==='MacIntel'&&touchPoints>1);
 }
 
+export function shouldRefreshVideoOnActivation(userAgent:string,platform:string,touchPoints:number,automaticAudio:boolean,manualActivation:boolean){
+  return needsFreshVideoOnActivation(userAgent,platform,touchPoints)&&(manualActivation||!automaticAudio);
+}
+
 const unlockedMonitors=new Set<string>();
 export function isAutomaticAudioUnlocked(id:string){return unlockedMonitors.has(id)}
 export function unlockAutomaticAudio(id:string){unlockedMonitors.add(id)}

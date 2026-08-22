@@ -35,7 +35,7 @@ const Ct = (e) => new gt(typeof e == "string" ? e : e + "", void 0, F), bt = (e,
   for (const s of t.cssRules) i += s.cssText;
   return Ct(i);
 })(e) : e;
-const { is: Mt, defineProperty: It, getOwnPropertyDescriptor: Pt, getOwnPropertyNames: Nt, getOwnPropertySymbols: Lt, getPrototypeOf: Ut } = Object, z = globalThis, ot = z.trustedTypes, Dt = ot ? ot.emptyScript : "", Tt = z.reactiveElementPolyfillSupport, C = (e, t) => e, R = { toAttribute(e, t) {
+const { is: Mt, defineProperty: It, getOwnPropertyDescriptor: Pt, getOwnPropertyNames: Nt, getOwnPropertySymbols: Ut, getPrototypeOf: Lt } = Object, z = globalThis, ot = z.trustedTypes, Dt = ot ? ot.emptyScript : "", Tt = z.reactiveElementPolyfillSupport, C = (e, t) => e, R = { toAttribute(e, t) {
   switch (t) {
     case Boolean:
       e = e ? Dt : null;
@@ -94,13 +94,13 @@ let A = class extends HTMLElement {
   }
   static _$Ei() {
     if (this.hasOwnProperty(C("elementProperties"))) return;
-    const t = Ut(this);
+    const t = Lt(this);
     t.finalize(), t.l !== void 0 && (this.l = [...t.l]), this.elementProperties = new Map(t.elementProperties);
   }
   static finalize() {
     if (this.hasOwnProperty(C("finalized"))) return;
     if (this.finalized = !0, this._$Ei(), this.hasOwnProperty(C("properties"))) {
-      const i = this.properties, s = [...Nt(i), ...Lt(i)];
+      const i = this.properties, s = [...Nt(i), ...Ut(i)];
       for (const o of s) this.createProperty(o, i[o]);
     }
     const t = this[Symbol.metadata];
@@ -247,9 +247,9 @@ let A = class extends HTMLElement {
   }
 };
 A.elementStyles = [], A.shadowRootOptions = { mode: "open" }, A[C("elementProperties")] = /* @__PURE__ */ new Map(), A[C("finalized")] = /* @__PURE__ */ new Map(), Tt?.({ ReactiveElement: A }), (z.reactiveElementVersions ??= []).push("2.1.2");
-const Q = globalThis, rt = (e) => e, H = Q.trustedTypes, at = H ? H.createPolicy("lit-html", { createHTML: (e) => e }) : void 0, _t = "$lit$", g = `lit$${Math.random().toFixed(9).slice(2)}$`, $t = "?" + g, Rt = `<${$t}>`, v = document, M = () => v.createComment(""), I = (e) => e === null || typeof e != "object" && typeof e != "function", Z = Array.isArray, Ht = (e) => Z(e) || typeof e?.[Symbol.iterator] == "function", q = `[ 	
+const Q = globalThis, rt = (e) => e, V = Q.trustedTypes, at = V ? V.createPolicy("lit-html", { createHTML: (e) => e }) : void 0, _t = "$lit$", g = `lit$${Math.random().toFixed(9).slice(2)}$`, $t = "?" + g, Rt = `<${$t}>`, v = document, M = () => v.createComment(""), I = (e) => e === null || typeof e != "object" && typeof e != "function", Z = Array.isArray, Vt = (e) => Z(e) || typeof e?.[Symbol.iterator] == "function", q = `[ 	
 \f\r]`, S = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, ct = /-->/g, ht = />/g, b = RegExp(`>|${q}(?:([^\\s"'>=/]+)(${q}*=${q}*(?:[^ 	
-\f\r"'\`<>=]|("|')|))|$)`, "g"), lt = /'/g, dt = /"/g, vt = /^(?:script|style|textarea|title)$/i, Vt = (e) => (t, ...i) => ({ _$litType$: e, strings: t, values: i }), u = Vt(1), k = /* @__PURE__ */ Symbol.for("lit-noChange"), h = /* @__PURE__ */ Symbol.for("lit-nothing"), ut = /* @__PURE__ */ new WeakMap(), _ = v.createTreeWalker(v, 129);
+\f\r"'\`<>=]|("|')|))|$)`, "g"), lt = /'/g, dt = /"/g, vt = /^(?:script|style|textarea|title)$/i, Ht = (e) => (t, ...i) => ({ _$litType$: e, strings: t, values: i }), u = Ht(1), k = /* @__PURE__ */ Symbol.for("lit-noChange"), h = /* @__PURE__ */ Symbol.for("lit-nothing"), ut = /* @__PURE__ */ new WeakMap(), _ = v.createTreeWalker(v, 129);
 function yt(e, t) {
   if (!Z(e) || !e.hasOwnProperty("raw")) throw Error("invalid template strings array");
   return at !== void 0 ? at.createHTML(t) : t;
@@ -285,7 +285,7 @@ class P {
         if (vt.test(o.tagName)) {
           const l = o.textContent.split(g), m = l.length - 1;
           if (m > 0) {
-            o.textContent = H ? H.emptyScript : "";
+            o.textContent = V ? V.emptyScript : "";
             for (let f = 0; f < m; f++) o.append(l[f], M()), _.nextNode(), a.push({ type: 2, index: ++n });
             o.append(l[m], M());
           }
@@ -326,7 +326,7 @@ class Bt {
     for (; a !== void 0; ) {
       if (r === a.index) {
         let d;
-        a.type === 2 ? d = new L(n, n.nextSibling, this, t) : a.type === 1 ? d = new a.ctor(n, a.name, a.strings, this, t) : a.type === 6 && (d = new Gt(n, this, t)), this._$AV.push(d), a = s[++c];
+        a.type === 2 ? d = new U(n, n.nextSibling, this, t) : a.type === 1 ? d = new a.ctor(n, a.name, a.strings, this, t) : a.type === 6 && (d = new Gt(n, this, t)), this._$AV.push(d), a = s[++c];
       }
       r !== a?.index && (n = _.nextNode(), r++);
     }
@@ -337,7 +337,7 @@ class Bt {
     for (const s of this._$AV) s !== void 0 && (s.strings !== void 0 ? (s._$AI(t, s, i), i += s.strings.length - 2) : s._$AI(t[i])), i++;
   }
 }
-class L {
+class U {
   get _$AU() {
     return this._$AM?._$AU ?? this._$Cv;
   }
@@ -356,7 +356,7 @@ class L {
     return this._$AB;
   }
   _$AI(t, i = this) {
-    t = x(this, t, i), I(t) ? t === h || t == null || t === "" ? (this._$AH !== h && this._$AR(), this._$AH = h) : t !== this._$AH && t !== k && this._(t) : t._$litType$ !== void 0 ? this.$(t) : t.nodeType !== void 0 ? this.T(t) : Ht(t) ? this.k(t) : this._(t);
+    t = x(this, t, i), I(t) ? t === h || t == null || t === "" ? (this._$AH !== h && this._$AR(), this._$AH = h) : t !== this._$AH && t !== k && this._(t) : t._$litType$ !== void 0 ? this.$(t) : t.nodeType !== void 0 ? this.T(t) : Vt(t) ? this.k(t) : this._(t);
   }
   O(t) {
     return this._$AA.parentNode.insertBefore(t, this._$AB);
@@ -383,7 +383,7 @@ class L {
     Z(this._$AH) || (this._$AH = [], this._$AR());
     const i = this._$AH;
     let s, o = 0;
-    for (const n of t) o === i.length ? i.push(s = new L(this.O(M()), this.O(M()), this, this.options)) : s = i[o], s._$AI(n), o++;
+    for (const n of t) o === i.length ? i.push(s = new U(this.O(M()), this.O(M()), this, this.options)) : s = i[o], s._$AI(n), o++;
     o < i.length && (this._$AR(s && s._$AB.nextSibling, o), i.length = o);
   }
   _$AR(t = this._$AA.nextSibling, i) {
@@ -462,13 +462,13 @@ class Gt {
   }
 }
 const Kt = Q.litHtmlPolyfillSupport;
-Kt?.(P, L), (Q.litHtmlVersions ??= []).push("3.3.3");
+Kt?.(P, U), (Q.litHtmlVersions ??= []).push("3.3.3");
 const At = (e, t, i) => {
   const s = i?.renderBefore ?? t;
   let o = s._$litPart$;
   if (o === void 0) {
     const n = i?.renderBefore ?? null;
-    s._$litPart$ = o = new L(t.insertBefore(M(), n), n, void 0, i ?? {});
+    s._$litPart$ = o = new U(t.insertBefore(M(), n), n, void 0, i ?? {});
   }
   return o._$AI(e), o;
 };
@@ -651,7 +651,7 @@ class ee {
   }
   subscribe(t) {
     return this.listeners.add(t), t(this.state), () => {
-      this.listeners.delete(t), this.listeners.size || (this.machine.destroy(), V.get(this.key) === this && V.delete(this.key));
+      this.listeners.delete(t), this.listeners.size || (this.machine.destroy(), H.get(this.key) === this && H.delete(this.key));
     };
   }
   open() {
@@ -664,11 +664,11 @@ class ee {
     return this.machine.remainingMs();
   }
 }
-const V = /* @__PURE__ */ new Map(), mt = /* @__PURE__ */ new Map();
+const H = /* @__PURE__ */ new Map(), mt = /* @__PURE__ */ new Map();
 function ie(e) {
   const t = e.id ?? `${e.camera ?? e.stream}|${e.sound_sensor}`, i = JSON.stringify([e.sound_sensor, e.sound_threshold_db, e.sound_reset_db, e.trigger_for, e.silence_duration, e.manual_close_cooldown]);
-  let s = V.get(t);
-  return (!s || mt.get(t) !== i) && (s = new ee(e, t), V.set(t, s), mt.set(t, i)), s;
+  let s = H.get(t);
+  return (!s || mt.get(t) !== i) && (s = new ee(e, t), H.set(t, s), mt.set(t, i)), s;
 }
 const O = /* @__PURE__ */ new Map();
 function W(e, t) {
@@ -683,17 +683,20 @@ function se(e, t, i) {
 function oe(e, t = "", i = 0) {
   return /iPad|iPhone|iPod/i.test(e) || t === "MacIntel" && i > 1;
 }
+function ne(e, t, i, s, o) {
+  return oe(e, t, i) && (o || !s);
+}
 const St = /* @__PURE__ */ new Set();
 function G(e) {
   return St.has(e);
 }
-function ne(e) {
+function re(e) {
   St.add(e);
 }
-var re = Object.defineProperty, ae = Object.getOwnPropertyDescriptor, U = (e, t, i, s) => {
-  for (var o = s > 1 ? void 0 : s ? ae(t, i) : t, n = e.length - 1, r; n >= 0; n--)
+var ae = Object.defineProperty, ce = Object.getOwnPropertyDescriptor, L = (e, t, i, s) => {
+  for (var o = s > 1 ? void 0 : s ? ce(t, i) : t, n = e.length - 1, r; n >= 0; n--)
     (r = e[n]) && (o = (s ? r(t, i, o) : r(o)) || o);
-  return s && o && re(t, i, o), o;
+  return s && o && ae(t, i, o), o;
 };
 let y = class extends w {
   constructor() {
@@ -754,8 +757,12 @@ let y = class extends w {
   async activateVideo() {
     await this.updateComplete;
     const e = globalThis.navigator;
-    this.automaticAudio = G(this.configId), this.muted = !this.automaticAudio, this.requestUpdate(), e && oe(e.userAgent, e.platform, e.maxTouchPoints) && !this.automaticAudio && (this.camera?.remove(), this.camera = void 0, this.cameraSignature = "", this.ensureCamera(), this.camera && (this.camera.hass = this.hass), this.syncPortal()), requestAnimationFrame(() => {
-      this.playVideos(this.camera), setTimeout(() => this.playVideos(this.camera), 300);
+    this.automaticAudio = G(this.configId);
+    const t = this.automaticAudio;
+    this.muted = !0, this.applyVideoMuted(this.camera, !0), this.requestUpdate(), e && ne(e.userAgent, e.platform, e.maxTouchPoints, t, this.manualActivation) && (this.camera?.remove(), this.camera = void 0, this.cameraSignature = "", this.ensureCamera(this.manualActivation), this.camera && (this.camera.hass = this.hass), this.syncPortal()), requestAnimationFrame(() => {
+      this.playVideos(this.camera), setTimeout(() => {
+        this.playVideos(this.camera), t && (this.muted = !1, this.applyVideoMuted(this.camera, !1), this.requestUpdate());
+      }, 300);
     });
   }
   playVideos(e) {
@@ -776,7 +783,7 @@ let y = class extends w {
     }
   }
   enableAutomaticAudio() {
-    ne(this.configId), this.automaticAudio = !0, this.muted = !1, this.applyVideoMuted(this.camera, !1), this.playVideos(this.camera), this.active() || setTimeout(() => this.muteVideo(), 150), this.requestUpdate();
+    re(this.configId), this.automaticAudio = !0, this.muted = !1, this.applyVideoMuted(this.camera, !1), this.playVideos(this.camera), this.active() || setTimeout(() => this.muteVideo(), 150), this.requestUpdate();
   }
   eligible() {
     return this.config.kiosk?.enabled !== !1 && (this.config.kiosk?.device_bound === !1 || $(this.configId)) && (!this.config.kiosk?.allowed_user_ids?.length || !!this.hass?.user && this.config.kiosk.allowed_user_ids.includes(this.hass.user.id));
@@ -1058,19 +1065,19 @@ y.styles = bt`
       color: var(--secondary-text-color);
     }
   `;
-U([
+L([
   Y({ attribute: !1 })
 ], y.prototype, "hass", 2);
-U([
+L([
   j()
 ], y.prototype, "machineState", 2);
-U([
+L([
   j()
 ], y.prototype, "muted", 2);
-U([
+L([
   j()
 ], y.prototype, "automaticAudio", 2);
-y = U([
+y = L([
   Et("baby-monitor-kiosk-card")
 ], y);
 window.customCards = window.customCards || [];
@@ -1079,5 +1086,5 @@ window.customCards.push({
   name: "Baby Monitor Kiosk Card",
   description: "Device-local sound-triggered preloaded WebRTC baby monitor"
 });
-console.info("%c BABY-MONITOR-KIOSK-CARD %c 0.3.6 ", "color:white;background:#3949ab;font-weight:bold", "color:#3949ab;background:white");
+console.info("%c BABY-MONITOR-KIOSK-CARD %c 0.3.7 ", "color:white;background:#3949ab;font-weight:bold", "color:#3949ab;background:white");
 //# sourceMappingURL=baby-monitor-kiosk-card.js.map
