@@ -1,6 +1,7 @@
 import type {MachineState} from './types';
-export type Event={type:'LOUD'}|{type:'QUIET'}|{type:'TRIGGER_ELAPSED'}|{type:'SILENCE_ELAPSED'}|{type:'MANUAL_CLOSE'}|{type:'COOLDOWN_ELAPSED'};
+export type Event={type:'LOUD'}|{type:'QUIET'}|{type:'TRIGGER_ELAPSED'}|{type:'SILENCE_ELAPSED'}|{type:'MANUAL_OPEN'}|{type:'MANUAL_CLOSE'}|{type:'COOLDOWN_ELAPSED'};
 export function transition(state:MachineState,event:Event):MachineState {
+  if(event.type==='MANUAL_OPEN')return 'ACTIVE';
   switch(state){
     case 'IDLE': return event.type==='LOUD'?'SOUND_PENDING':state;
     case 'SOUND_PENDING': if(event.type==='QUIET')return 'IDLE'; if(event.type==='TRIGGER_ELAPSED')return 'ACTIVE'; return state;

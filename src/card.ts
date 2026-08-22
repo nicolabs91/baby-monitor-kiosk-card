@@ -38,6 +38,8 @@ export class Card extends LitElement {
       border-radius: 16px;
     }
     .monitor-icon {
+      border: 0;
+      padding: 0;
       position: relative;
       width: 36px;
       height: 36px;
@@ -47,6 +49,11 @@ export class Card extends LitElement {
       place-items: center;
       color: var(--state-icon-color, var(--primary-color));
       background: color-mix(in srgb, var(--state-icon-color, var(--primary-color)) 14%, transparent);
+      cursor: pointer;
+    }
+    .monitor-icon:disabled {
+      cursor: default;
+      opacity: 0.55;
     }
     .monitor-icon::after {
       content: "";
@@ -439,16 +446,21 @@ export class Card extends LitElement {
     if (isPaired(this.configId)) this.ensureCamera();
     this.requestUpdate();
   }
+  private openCamera() {
+    if (!this.eligible()) return;
+    this.runtime?.open();
+  }
   render() {
     if (!this.config) return nothing;
     const sensor = this.hass?.states[this.config.sound_sensor]?.state ?? "?";
     const paired = isPaired(this.configId);
     const ready = paired && this.automaticAudio;
+    const canOpen = this.eligible();
     return html`${this.config.show_setup
       ? html`<ha-card class="setup"
-          ><div class="monitor-icon ${ready ? "ready" : ""}">
+          ><button class="monitor-icon ${ready ? "ready" : ""}" title=${canOpen ? "Camera openen" : "Koppel dit apparaat om de camera te openen"} aria-label=${canOpen ? "Babycamera openen" : "Babycamera niet beschikbaar: apparaat niet gekoppeld"} ?disabled=${!canOpen} @click=${() => this.openCamera()}>
             <ha-icon icon="mdi:baby-face-outline"></ha-icon>
-          </div>
+          </button>
           <div class="copy">
             <div class="title">Baby Monitor</div>
             <div class="status"><span class="dot ${ready ? "ok" : ""}"></span>${!paired ? "Niet gekoppeld" : this.automaticAudio ? "Klaar · automatisch geluid" : "Gekoppeld · tik voor geluid"}</div>
