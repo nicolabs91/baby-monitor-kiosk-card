@@ -9,3 +9,7 @@ export function initialMuted(preload:boolean,stored:string|null,defaultMuted:boo
 export function needsFreshVideoOnActivation(userAgent:string,platform='',touchPoints=0){
   return /iPad|iPhone|iPod/i.test(userAgent)||(platform==='MacIntel'&&touchPoints>1);
 }
+
+const unlockedMonitors=new Set<string>();
+export function isAutomaticAudioUnlocked(id:string){return unlockedMonitors.has(id)}
+export function unlockAutomaticAudio(id:string){unlockedMonitors.add(id)}
