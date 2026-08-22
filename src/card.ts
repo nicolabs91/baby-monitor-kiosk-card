@@ -11,6 +11,7 @@ export class Card extends LitElement {
   @state() private machineState: MachineState = "IDLE";
   @state() private muted = true;
   @state() private automaticAudio = false;
+  private manualActivation = false;
   private config!: CardConfig;
   private runtime?: ReturnType<typeof runtimeFor>;
   private unsubscribe?: () => void;
@@ -208,6 +209,7 @@ export class Card extends LitElement {
     if ((!c.camera && !c.stream) || !c.sound_sensor) throw Error("camera or stream, and sound_sensor are required");
     const nextId = c.id ?? `${c.camera ?? c.stream}|${c.sound_sensor}`;
     if (this.config && this.configId !== nextId) {
+      this.manualActivation = false;
       this.unsubscribe?.();
       releaseOwner(this.configId, this);
       this.portal?.remove();
@@ -236,10 +238,11 @@ export class Card extends LitElement {
     this.runtime = runtimeFor(this.config);
     this.unsubscribe = this.runtime.subscribe((s) => {
       this.machineState = s;
+      if (s === "IDLE" || s === "MANUAL_COOLDOWN") this.manualActivation = false;
       this.automaticAudio = isAutomaticAudioUnlocked(this.configId);
       this.requestUpdate();
       if (claimOwner(this.configId, this)) {
-        if (s === "ACTIVE") {
+        if (s === "ACTIVE" && (this.eligible() || this.manualActivation)) {
           this.companion(true);
           void this.activateVideo();
         }
@@ -288,8 +291,8 @@ export class Card extends LitElement {
       this.cameraSignature = signature;
     }
   }
-  private ensureCamera() {
-    if (!this.isConnected || this.camera || !this.config || !this.eligible() || !claimOwner(this.configId, this)) return;
+  private ensureCamera(manual = false) {
+    if (!this.isConnected || this.camera || !this.config || !(manual ? this.manualAllowed() : this.eligible()) || !claimOwner(this.configId, this)) return;
     this.camera = document.createElement("webrtc-camera");
     this.camera.style.cssText = "display:block;width:100%;height:100%;object-fit:contain";
     this.configureCamera();
@@ -344,8 +347,12 @@ export class Card extends LitElement {
   private eligible() {
     return this.config.kiosk?.enabled !== false && (this.config.kiosk?.device_bound === false || isPaired(this.configId)) && (!this.config.kiosk?.allowed_user_ids?.length || (!!this.hass?.user && this.config.kiosk.allowed_user_ids.includes(this.hass.user.id)));
   }
+  private manualAllowed() {
+    return this.config.kiosk?.enabled !== false && (!this.config.kiosk?.allowed_user_ids?.length || (!!this.hass?.user && this.config.kiosk.allowed_user_ids.includes(this.hass.user.id)));
+  }
   private active() {
-    return this.config.auto_open !== false && this.eligible() && (this.machineState === "ACTIVE" || this.machineState === "SILENCE_TIMER");
+    const cameraActive = this.machineState === "ACTIVE" || this.machineState === "SILENCE_TIMER";
+    return cameraActive && (this.manualActivation || (this.config.auto_open !== false && this.eligible()));
   }
   private toggleMute() {
     if (this.muted && !this.automaticAudio) {
@@ -447,18 +454,22 @@ export class Card extends LitElement {
     this.requestUpdate();
   }
   private openCamera() {
-    if (!this.eligible()) return;
+    if (!this.manualAllowed()) return;
+    this.manualActivation = true;
+    this.ensureCamera(true);
     this.runtime?.open();
+    void this.activateVideo();
+    this.requestUpdate();
   }
   render() {
     if (!this.config) return nothing;
     const sensor = this.hass?.states[this.config.sound_sensor]?.state ?? "?";
     const paired = isPaired(this.configId);
     const ready = paired && this.automaticAudio;
-    const canOpen = this.eligible();
+    const canOpen = this.manualAllowed();
     return html`${this.config.show_setup
       ? html`<ha-card class="setup"
-          ><button class="monitor-icon ${ready ? "ready" : ""}" title=${canOpen ? "Camera openen" : "Koppel dit apparaat om de camera te openen"} aria-label=${canOpen ? "Babycamera openen" : "Babycamera niet beschikbaar: apparaat niet gekoppeld"} ?disabled=${!canOpen} @click=${() => this.openCamera()}>
+          ><button class="monitor-icon ${ready ? "ready" : ""}" title=${canOpen ? "Camera openen" : "Camera niet beschikbaar voor deze gebruiker"} aria-label=${canOpen ? "Babycamera openen" : "Babycamera niet beschikbaar voor deze gebruiker"} ?disabled=${!canOpen} @click=${() => this.openCamera()}>
             <ha-icon icon="mdi:baby-face-outline"></ha-icon>
           </button>
           <div class="copy">

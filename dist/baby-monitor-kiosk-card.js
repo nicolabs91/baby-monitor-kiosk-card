@@ -247,10 +247,10 @@ let A = class extends HTMLElement {
   }
 };
 A.elementStyles = [], A.shadowRootOptions = { mode: "open" }, A[C("elementProperties")] = /* @__PURE__ */ new Map(), A[C("finalized")] = /* @__PURE__ */ new Map(), Tt?.({ ReactiveElement: A }), (z.reactiveElementVersions ??= []).push("2.1.2");
-const Q = globalThis, rt = (e) => e, H = Q.trustedTypes, at = H ? H.createPolicy("lit-html", { createHTML: (e) => e }) : void 0, _t = "$lit$", g = `lit$${Math.random().toFixed(9).slice(2)}$`, $t = "?" + g, Rt = `<${$t}>`, y = document, M = () => y.createComment(""), P = (e) => e === null || typeof e != "object" && typeof e != "function", Z = Array.isArray, Ht = (e) => Z(e) || typeof e?.[Symbol.iterator] == "function", q = `[ 	
+const Q = globalThis, rt = (e) => e, H = Q.trustedTypes, at = H ? H.createPolicy("lit-html", { createHTML: (e) => e }) : void 0, _t = "$lit$", g = `lit$${Math.random().toFixed(9).slice(2)}$`, $t = "?" + g, Rt = `<${$t}>`, v = document, M = () => v.createComment(""), P = (e) => e === null || typeof e != "object" && typeof e != "function", Z = Array.isArray, Ht = (e) => Z(e) || typeof e?.[Symbol.iterator] == "function", q = `[ 	
 \f\r]`, S = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, ct = /-->/g, ht = />/g, b = RegExp(`>|${q}(?:([^\\s"'>=/]+)(${q}*=${q}*(?:[^ 	
-\f\r"'\`<>=]|("|')|))|$)`, "g"), lt = /'/g, dt = /"/g, yt = /^(?:script|style|textarea|title)$/i, Vt = (e) => (t, ...i) => ({ _$litType$: e, strings: t, values: i }), u = Vt(1), x = /* @__PURE__ */ Symbol.for("lit-noChange"), h = /* @__PURE__ */ Symbol.for("lit-nothing"), ut = /* @__PURE__ */ new WeakMap(), _ = y.createTreeWalker(y, 129);
-function vt(e, t) {
+\f\r"'\`<>=]|("|')|))|$)`, "g"), lt = /'/g, dt = /"/g, vt = /^(?:script|style|textarea|title)$/i, Vt = (e) => (t, ...i) => ({ _$litType$: e, strings: t, values: i }), u = Vt(1), k = /* @__PURE__ */ Symbol.for("lit-noChange"), h = /* @__PURE__ */ Symbol.for("lit-nothing"), ut = /* @__PURE__ */ new WeakMap(), _ = v.createTreeWalker(v, 129);
+function yt(e, t) {
   if (!Z(e) || !e.hasOwnProperty("raw")) throw Error("invalid template strings array");
   return at !== void 0 ? at.createHTML(t) : t;
 }
@@ -260,11 +260,11 @@ const zt = (e, t) => {
   for (let c = 0; c < i; c++) {
     const a = e[c];
     let d, p, l = -1, m = 0;
-    for (; m < a.length && (r.lastIndex = m, p = r.exec(a), p !== null); ) m = r.lastIndex, r === S ? p[1] === "!--" ? r = ct : p[1] !== void 0 ? r = ht : p[2] !== void 0 ? (yt.test(p[2]) && (o = RegExp("</" + p[2], "g")), r = b) : p[3] !== void 0 && (r = b) : r === b ? p[0] === ">" ? (r = o ?? S, l = -1) : p[1] === void 0 ? l = -2 : (l = r.lastIndex - p[2].length, d = p[1], r = p[3] === void 0 ? b : p[3] === '"' ? dt : lt) : r === dt || r === lt ? r = b : r === ct || r === ht ? r = S : (r = b, o = void 0);
+    for (; m < a.length && (r.lastIndex = m, p = r.exec(a), p !== null); ) m = r.lastIndex, r === S ? p[1] === "!--" ? r = ct : p[1] !== void 0 ? r = ht : p[2] !== void 0 ? (vt.test(p[2]) && (o = RegExp("</" + p[2], "g")), r = b) : p[3] !== void 0 && (r = b) : r === b ? p[0] === ">" ? (r = o ?? S, l = -1) : p[1] === void 0 ? l = -2 : (l = r.lastIndex - p[2].length, d = p[1], r = p[3] === void 0 ? b : p[3] === '"' ? dt : lt) : r === dt || r === lt ? r = b : r === ct || r === ht ? r = S : (r = b, o = void 0);
     const f = r === b && e[c + 1].startsWith("/>") ? " " : "";
     n += r === S ? a + Rt : l >= 0 ? (s.push(d), a.slice(0, l) + _t + a.slice(l) + g + f) : a + g + (l === -2 ? c : f);
   }
-  return [vt(e, n + (e[i] || "<?>") + (t === 2 ? "</svg>" : t === 3 ? "</math>" : "")), s];
+  return [yt(e, n + (e[i] || "<?>") + (t === 2 ? "</svg>" : t === 3 ? "</math>" : "")), s];
 };
 class I {
   constructor({ strings: t, _$litType$: i }, s) {
@@ -282,7 +282,7 @@ class I {
           const m = p[r++], f = o.getAttribute(l).split(g), D = /([.?@])?(.*)/.exec(m);
           a.push({ type: 1, index: n, name: D[2], strings: f, ctor: D[1] === "." ? jt : D[1] === "?" ? qt : D[1] === "@" ? Wt : B }), o.removeAttribute(l);
         } else l.startsWith(g) && (a.push({ type: 6, index: n }), o.removeAttribute(l));
-        if (yt.test(o.tagName)) {
+        if (vt.test(o.tagName)) {
           const l = o.textContent.split(g), m = l.length - 1;
           if (m > 0) {
             o.textContent = H ? H.emptyScript : "";
@@ -299,15 +299,15 @@ class I {
     }
   }
   static createElement(t, i) {
-    const s = y.createElement("template");
+    const s = v.createElement("template");
     return s.innerHTML = t, s;
   }
 }
-function k(e, t, i = e, s) {
-  if (t === x) return t;
+function x(e, t, i = e, s) {
+  if (t === k) return t;
   let o = s !== void 0 ? i._$Co?.[s] : i._$Cl;
   const n = P(t) ? void 0 : t._$litDirective$;
-  return o?.constructor !== n && (o?._$AO?.(!1), n === void 0 ? o = void 0 : (o = new n(e), o._$AT(e, i, s)), s !== void 0 ? (i._$Co ??= [])[s] = o : i._$Cl = o), o !== void 0 && (t = k(e, o._$AS(e, t.values), o, s)), t;
+  return o?.constructor !== n && (o?._$AO?.(!1), n === void 0 ? o = void 0 : (o = new n(e), o._$AT(e, i, s)), s !== void 0 ? (i._$Co ??= [])[s] = o : i._$Cl = o), o !== void 0 && (t = x(e, o._$AS(e, t.values), o, s)), t;
 }
 class Bt {
   constructor(t, i) {
@@ -320,7 +320,7 @@ class Bt {
     return this._$AM._$AU;
   }
   u(t) {
-    const { el: { content: i }, parts: s } = this._$AD, o = (t?.creationScope ?? y).importNode(i, !0);
+    const { el: { content: i }, parts: s } = this._$AD, o = (t?.creationScope ?? v).importNode(i, !0);
     _.currentNode = o;
     let n = _.nextNode(), r = 0, c = 0, a = s[0];
     for (; a !== void 0; ) {
@@ -330,7 +330,7 @@ class Bt {
       }
       r !== a?.index && (n = _.nextNode(), r++);
     }
-    return _.currentNode = y, o;
+    return _.currentNode = v, o;
   }
   p(t) {
     let i = 0;
@@ -356,7 +356,7 @@ class U {
     return this._$AB;
   }
   _$AI(t, i = this) {
-    t = k(this, t, i), P(t) ? t === h || t == null || t === "" ? (this._$AH !== h && this._$AR(), this._$AH = h) : t !== this._$AH && t !== x && this._(t) : t._$litType$ !== void 0 ? this.$(t) : t.nodeType !== void 0 ? this.T(t) : Ht(t) ? this.k(t) : this._(t);
+    t = x(this, t, i), P(t) ? t === h || t == null || t === "" ? (this._$AH !== h && this._$AR(), this._$AH = h) : t !== this._$AH && t !== k && this._(t) : t._$litType$ !== void 0 ? this.$(t) : t.nodeType !== void 0 ? this.T(t) : Ht(t) ? this.k(t) : this._(t);
   }
   O(t) {
     return this._$AA.parentNode.insertBefore(t, this._$AB);
@@ -365,10 +365,10 @@ class U {
     this._$AH !== t && (this._$AR(), this._$AH = this.O(t));
   }
   _(t) {
-    this._$AH !== h && P(this._$AH) ? this._$AA.nextSibling.data = t : this.T(y.createTextNode(t)), this._$AH = t;
+    this._$AH !== h && P(this._$AH) ? this._$AA.nextSibling.data = t : this.T(v.createTextNode(t)), this._$AH = t;
   }
   $(t) {
-    const { values: i, _$litType$: s } = t, o = typeof s == "number" ? this._$AC(t) : (s.el === void 0 && (s.el = I.createElement(vt(s.h, s.h[0]), this.options)), s);
+    const { values: i, _$litType$: s } = t, o = typeof s == "number" ? this._$AC(t) : (s.el === void 0 && (s.el = I.createElement(yt(s.h, s.h[0]), this.options)), s);
     if (this._$AH?._$AD === o) this._$AH.p(i);
     else {
       const n = new Bt(o, this), r = n.u(this.options);
@@ -409,11 +409,11 @@ class B {
   _$AI(t, i = this, s, o) {
     const n = this.strings;
     let r = !1;
-    if (n === void 0) t = k(this, t, i, 0), r = !P(t) || t !== this._$AH && t !== x, r && (this._$AH = t);
+    if (n === void 0) t = x(this, t, i, 0), r = !P(t) || t !== this._$AH && t !== k, r && (this._$AH = t);
     else {
       const c = t;
       let a, d;
-      for (t = n[0], a = 0; a < n.length - 1; a++) d = k(this, c[s + a], i, a), d === x && (d = this._$AH[a]), r ||= !P(d) || d !== this._$AH[a], d === h ? t = h : t !== h && (t += (d ?? "") + n[a + 1]), this._$AH[a] = d;
+      for (t = n[0], a = 0; a < n.length - 1; a++) d = x(this, c[s + a], i, a), d === k && (d = this._$AH[a]), r ||= !P(d) || d !== this._$AH[a], d === h ? t = h : t !== h && (t += (d ?? "") + n[a + 1]), this._$AH[a] = d;
     }
     r && !o && this.j(t);
   }
@@ -442,7 +442,7 @@ class Wt extends B {
     super(t, i, s, o, n), this.type = 5;
   }
   _$AI(t, i = this) {
-    if ((t = k(this, t, i, 0) ?? h) === x) return;
+    if ((t = x(this, t, i, 0) ?? h) === k) return;
     const s = this._$AH, o = t === h && s !== h || t.capture !== s.capture || t.once !== s.once || t.passive !== s.passive, n = t !== h && (s === h || o);
     o && this.element.removeEventListener(this.name, this, s), n && this.element.addEventListener(this.name, this, t), this._$AH = t;
   }
@@ -458,7 +458,7 @@ class Gt {
     return this._$AM._$AU;
   }
   _$AI(t) {
-    k(this, t);
+    x(this, t);
   }
 }
 const Kt = Q.litHtmlPolyfillSupport;
@@ -492,7 +492,7 @@ class w extends A {
     super.disconnectedCallback(), this._$Do?.setConnected(!1);
   }
   render() {
-    return x;
+    return k;
   }
 }
 w._$litElement$ = !0, w.finalized = !0, X.litElementHydrateSupport?.({ LitElement: w });
@@ -538,10 +538,10 @@ const wt = "baby-monitor-kiosk-card:", tt = (e) => wt + e;
 function $(e) {
   return localStorage.getItem(tt(e)) === "paired";
 }
-function xt(e) {
+function kt(e) {
   localStorage.setItem(tt(e), "paired");
 }
-function kt(e) {
+function xt(e) {
   localStorage.removeItem(tt(e));
 }
 function pt(e) {
@@ -574,7 +574,7 @@ let N = class extends w {
     if (!e) return u``;
     const t = e.id ?? `${e.camera ?? e.stream}|${e.sound_sensor}`, i = (s, o, n) => u`<label><input type=checkbox .checked=${n} @change=${(r) => this.set(s, r.target.checked)}> ${o}</label>`;
     return u`<div class=grid><label>Naam/ID<input .value=${e.id ?? ""} @change=${(s) => this.set("id", s.target.value)}></label>${this.entity("camera", "Camera entity", e.camera ?? "", ["camera"])}<label>go2rtc/WebRTC stream<input .value=${e.stream ?? ""} @change=${(s) => this.set("stream", s.target.value)}></label>${this.entity("sound_sensor", "Geluidsensor", e.sound_sensor ?? "", ["sensor", "binary_sensor"])}${[["sound_threshold_db", "Activeringsgrens dB"], ["sound_reset_db", "Resetgrens dB"], ["trigger_for", "Minimale geluidsduur (s)"], ["silence_duration", "Stiltetijd (s)"], ["manual_close_cooldown", "Cooldown handmatig sluiten (s)"]].map(([s, o]) => u`<label>${o}<input type=number .value=${String(e[s] ?? "")} @change=${(n) => this.set(s, Number(n.target.value))}></label>`)}${i("preload", "Stream voorverwarmen", e.preload !== !1)}${i("auto_open", "Automatisch openen", e.auto_open !== !1)}${i("kiosk.enabled", "Kioskmodus", e.kiosk?.enabled !== !1)}${i("kiosk.device_bound", "Alleen gekoppeld apparaat", e.kiosk?.device_bound !== !1)}<label>Toegestane HA-user-ID’s (komma-gescheiden)<input .value=${e.kiosk?.allowed_user_ids?.join(", ") ?? ""} @change=${(s) => this.set("kiosk.allowed_user_ids", s.target.value.split(",").map((o) => o.trim()).filter(Boolean))}></label>${i("audio.default_muted", "Standaard gedempt", e.audio?.default_muted ?? !1)}${i("audio.remember_state", "Audiostatus onthouden", e.audio?.remember_state !== !1)}${i("controls.mute", "Mute-knop tonen", e.controls?.mute !== !1)}${i("controls.close", "Sluitknop tonen", e.controls?.close !== !1)}${i("controls.volume", "Volumeknoppen tonen", e.controls?.volume ?? !1)}${i("controls.brightness", "Helderheidsknoppen tonen", e.controls?.brightness ?? !1)}${i("debug", "Debugstatus", !!e.debug)}<label>Companion notify service<input .value=${e.companion?.notify_service ?? ""} @change=${(s) => this.set("companion.notify_service", s.target.value)}></label>${[["active_brightness", "Actieve helderheid"], ["idle_brightness", "Rusthelderheid"], ["active_volume", "Actief volume"], ["idle_volume", "Rustvolume"]].map(([s, o]) => u`<label>${o}<input type=number min=0 max=100 .value=${String(e.companion?.[s] ?? "")} @change=${(n) => this.set(`companion.${s}`, Number(n.target.value))}></label>`)}<div class=pair><b>Dit apparaat gekoppeld: ${$(t) ? "ja" : "nee"}</b><button @click=${() => {
-      $(t) ? kt(t) : xt(t), this.requestUpdate();
+      $(t) ? xt(t) : kt(t), this.requestUpdate();
     }}>${$(t) ? "Ontkoppel" : "Koppel dit apparaat"}</button></div></div>`;
   }
 };
@@ -695,9 +695,9 @@ var re = Object.defineProperty, ae = Object.getOwnPropertyDescriptor, L = (e, t,
     (r = e[n]) && (o = (s ? r(t, i, o) : r(o)) || o);
   return s && o && re(t, i, o), o;
 };
-let v = class extends w {
+let y = class extends w {
   constructor() {
-    super(...arguments), this.machineState = "IDLE", this.muted = !0, this.automaticAudio = !1, this.cameraSignature = "", this.currentBrightness = 100, this.currentVolume = 100;
+    super(...arguments), this.machineState = "IDLE", this.muted = !0, this.automaticAudio = !1, this.manualActivation = !1, this.cameraSignature = "", this.currentBrightness = 100, this.currentVolume = 100;
   }
   static getConfigElement() {
     return document.createElement("baby-monitor-kiosk-card-editor");
@@ -715,7 +715,7 @@ let v = class extends w {
   setConfig(e) {
     if (!e.camera && !e.stream || !e.sound_sensor) throw Error("camera or stream, and sound_sensor are required");
     const t = e.id ?? `${e.camera ?? e.stream}|${e.sound_sensor}`;
-    this.config && this.configId !== t && (this.unsubscribe?.(), ft(this.configId, this), this.portal?.remove(), this.portal = void 0, this.camera = void 0, this.cameraSignature = ""), this.config = { ...E, ...e }, this.id = this.configId, this.currentBrightness = e.companion?.active_brightness ?? 100, this.currentVolume = e.companion?.active_volume ?? 100, this.automaticAudio = G(this.configId);
+    this.config && this.configId !== t && (this.manualActivation = !1, this.unsubscribe?.(), ft(this.configId, this), this.portal?.remove(), this.portal = void 0, this.camera = void 0, this.cameraSignature = ""), this.config = { ...E, ...e }, this.id = this.configId, this.currentBrightness = e.companion?.active_brightness ?? 100, this.currentVolume = e.companion?.active_volume ?? 100, this.automaticAudio = G(this.configId);
     const i = e.audio?.remember_state === !1 ? null : localStorage.getItem(pt(this.configId));
     this.muted = this.automaticAudio ? !this.active() : se(e.preload !== !1, i, e.audio?.default_muted ?? !1), this.connectRuntime(), this.isConnected && (this.ensureCamera(), this.configureCamera());
   }
@@ -724,7 +724,7 @@ let v = class extends w {
   }
   connectRuntime() {
     this.unsubscribe?.(), this.runtime = ie(this.config), this.unsubscribe = this.runtime.subscribe((e) => {
-      this.machineState = e, this.automaticAudio = G(this.configId), this.requestUpdate(), W(this.configId, this) && (e === "ACTIVE" && (this.companion(!0), this.activateVideo()), (e === "IDLE" || e === "MANUAL_COOLDOWN") && (this.companion(!1), this.muteVideo()));
+      this.machineState = e, (e === "IDLE" || e === "MANUAL_COOLDOWN") && (this.manualActivation = !1), this.automaticAudio = G(this.configId), this.requestUpdate(), W(this.configId, this) && (e === "ACTIVE" && (this.eligible() || this.manualActivation) && (this.companion(!0), this.activateVideo()), (e === "IDLE" || e === "MANUAL_COOLDOWN") && (this.companion(!1), this.muteVideo()));
     });
   }
   connectedCallback() {
@@ -748,8 +748,8 @@ let v = class extends w {
     const e = this.cameraConfig(), t = JSON.stringify(e);
     this.camera && t !== this.cameraSignature && (this.camera.setConfig?.(e), this.cameraSignature = t);
   }
-  ensureCamera() {
-    !this.isConnected || this.camera || !this.config || !this.eligible() || !W(this.configId, this) || (this.camera = document.createElement("webrtc-camera"), this.camera.style.cssText = "display:block;width:100%;height:100%;object-fit:contain", this.configureCamera());
+  ensureCamera(e = !1) {
+    !this.isConnected || this.camera || !this.config || !(e ? this.manualAllowed() : this.eligible()) || !W(this.configId, this) || (this.camera = document.createElement("webrtc-camera"), this.camera.style.cssText = "display:block;width:100%;height:100%;object-fit:contain", this.configureCamera());
   }
   async activateVideo() {
     await this.updateComplete;
@@ -781,8 +781,11 @@ let v = class extends w {
   eligible() {
     return this.config.kiosk?.enabled !== !1 && (this.config.kiosk?.device_bound === !1 || $(this.configId)) && (!this.config.kiosk?.allowed_user_ids?.length || !!this.hass?.user && this.config.kiosk.allowed_user_ids.includes(this.hass.user.id));
   }
+  manualAllowed() {
+    return this.config.kiosk?.enabled !== !1 && (!this.config.kiosk?.allowed_user_ids?.length || !!this.hass?.user && this.config.kiosk.allowed_user_ids.includes(this.hass.user.id));
+  }
   active() {
-    return this.config.auto_open !== !1 && this.eligible() && (this.machineState === "ACTIVE" || this.machineState === "SILENCE_TIMER");
+    return (this.machineState === "ACTIVE" || this.machineState === "SILENCE_TIMER") && (this.manualActivation || this.config.auto_open !== !1 && this.eligible());
   }
   toggleMute() {
     if (this.muted && !this.automaticAudio) {
@@ -856,16 +859,16 @@ let v = class extends w {
     );
   }
   togglePair() {
-    $(this.configId) ? kt(this.configId) : xt(this.configId), $(this.configId) && this.ensureCamera(), this.requestUpdate();
+    $(this.configId) ? xt(this.configId) : kt(this.configId), $(this.configId) && this.ensureCamera(), this.requestUpdate();
   }
   openCamera() {
-    this.eligible() && this.runtime?.open();
+    this.manualAllowed() && (this.manualActivation = !0, this.ensureCamera(!0), this.runtime?.open(), this.activateVideo(), this.requestUpdate());
   }
   render() {
     if (!this.config) return h;
-    const e = this.hass?.states[this.config.sound_sensor]?.state ?? "?", t = $(this.configId), i = t && this.automaticAudio, s = this.eligible();
+    const e = this.hass?.states[this.config.sound_sensor]?.state ?? "?", t = $(this.configId), i = t && this.automaticAudio, s = this.manualAllowed();
     return u`${this.config.show_setup ? u`<ha-card class="setup"
-          ><button class="monitor-icon ${i ? "ready" : ""}" title=${s ? "Camera openen" : "Koppel dit apparaat om de camera te openen"} aria-label=${s ? "Babycamera openen" : "Babycamera niet beschikbaar: apparaat niet gekoppeld"} ?disabled=${!s} @click=${() => this.openCamera()}>
+          ><button class="monitor-icon ${i ? "ready" : ""}" title=${s ? "Camera openen" : "Camera niet beschikbaar voor deze gebruiker"} aria-label=${s ? "Babycamera openen" : "Babycamera niet beschikbaar voor deze gebruiker"} ?disabled=${!s} @click=${() => this.openCamera()}>
             <ha-icon icon="mdi:baby-face-outline"></ha-icon>
           </button>
           <div class="copy">
@@ -881,7 +884,7 @@ let v = class extends w {
         ></ha-card>` : h}${!this.active() && this.config.preload === !1 ? u`<span class="idle">Baby monitor gereed</span>` : h}${this.config.debug ? u`<div class="debug">state=${this.machineState} | value=${e} | on≥${this.config.sound_threshold_db ?? "-"} | off≤${this.config.sound_reset_db ?? "-"} | timer=${Math.ceil((this.runtime?.remainingMs() ?? 0) / 1e3)}s | kiosk=${this.eligible()} | preload=${this.config.preload !== !1 && this.eligible()}</div>` : h}`;
   }
 };
-v.styles = bt`
+y.styles = bt`
     :host {
       display: block;
       min-height: 1px;
@@ -1055,24 +1058,24 @@ v.styles = bt`
   `;
 L([
   Y({ attribute: !1 })
-], v.prototype, "hass", 2);
+], y.prototype, "hass", 2);
 L([
   j()
-], v.prototype, "machineState", 2);
+], y.prototype, "machineState", 2);
 L([
   j()
-], v.prototype, "muted", 2);
+], y.prototype, "muted", 2);
 L([
   j()
-], v.prototype, "automaticAudio", 2);
-v = L([
+], y.prototype, "automaticAudio", 2);
+y = L([
   Et("baby-monitor-kiosk-card")
-], v);
+], y);
 window.customCards = window.customCards || [];
 window.customCards.push({
   type: "baby-monitor-kiosk-card",
   name: "Baby Monitor Kiosk Card",
   description: "Device-local sound-triggered preloaded WebRTC baby monitor"
 });
-console.info("%c BABY-MONITOR-KIOSK-CARD %c 0.3.4 ", "color:white;background:#3949ab;font-weight:bold", "color:#3949ab;background:white");
+console.info("%c BABY-MONITOR-KIOSK-CARD %c 0.3.5 ", "color:white;background:#3949ab;font-weight:bold", "color:#3949ab;background:white");
 //# sourceMappingURL=baby-monitor-kiosk-card.js.map
