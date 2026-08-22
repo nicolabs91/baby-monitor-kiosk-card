@@ -1,0 +1,29 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Baby Monitor Kiosk Card smoke test</title>
+<script>
+  class WebRtcCamera extends HTMLElement {
+    setConfig(config) { this.config = config; this.textContent = 'LIVE CAMERA'; }
+  }
+  customElements.define('webrtc-camera', WebRtcCamera);
+  class EntityPicker extends HTMLElement {}
+  customElements.define('ha-entity-picker', EntityPicker);
+</script>
+<script type="module" src="../dist/baby-monitor-kiosk-card.js"></script>
+<baby-monitor-kiosk-card id="card"></baby-monitor-kiosk-card>
+<script type="module">
+  const card = document.querySelector('#card');
+  card.setConfig({
+    type: 'custom:baby-monitor-kiosk-card', id: 'smoke', stream: 'demo',
+    sound_sensor: 'sensor.sound', trigger_for: 0.05, silence_duration: 0.1,
+    manual_close_cooldown: 0.1, preload: true, debug: true,
+    kiosk: { device_bound: false }, controls: { mute: true, close: true }
+  });
+  card.hass = {
+    states: { 'sensor.sound': { state: '20', attributes: {} } },
+    user: { id: 'smoke-user' }, callService: async () => undefined
+  };
+  setTimeout(() => {
+    card.hass = { ...card.hass, states: { 'sensor.sound': { state: '60', attributes: {} } } };
+  }, 150);
+</script>

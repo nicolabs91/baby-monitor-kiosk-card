@@ -1,0 +1,3 @@
+import {describe,it,expect,beforeEach} from 'vitest';import {pair,unpair,isPaired,deviceKey} from '../src/device';
+const data=new Map<string,string>();Object.defineProperty(globalThis,'localStorage',{value:{getItem:(k:string)=>data.get(k)??null,setItem:(k:string,v:string)=>data.set(k,v),removeItem:(k:string)=>data.delete(k)},configurable:true});
+describe('device-local pairing',()=>{beforeEach(()=>data.clear());it('is opt-in and isolated by monitor id',()=>{expect(isPaired('nursery')).toBe(false);pair('nursery');expect(isPaired('nursery')).toBe(true);expect(isPaired('other')).toBe(false);unpair('nursery');expect(isPaired('nursery')).toBe(false);expect(deviceKey('nursery')).toContain('nursery')})});

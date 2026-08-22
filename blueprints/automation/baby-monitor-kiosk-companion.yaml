@@ -1,0 +1,30 @@
+blueprint:
+  name: Baby Monitor Kiosk Companion commands (optional)
+  description: Optional iOS kiosk brightness/volume fallback. Fullscreen/device isolation remains client-side.
+  domain: automation
+  input:
+    active_sensor: {name: Monitor active helper, selector: {entity: {domain: input_boolean}}}
+    notify_service: {name: Companion notify service, selector: {text: {}}}
+    active_brightness: {name: Active brightness, default: 100, selector: {number: {min: 0, max: 100}}}
+    idle_brightness: {name: Idle brightness, default: 10, selector: {number: {min: 0, max: 100}}}
+    active_volume: {name: Active volume, default: 100, selector: {number: {min: 0, max: 100}}}
+    idle_volume: {name: Idle volume, default: 30, selector: {number: {min: 0, max: 100}}}
+trigger:
+  - platform: state
+    entity_id: !input active_sensor
+variables:
+  active_brightness: !input active_brightness
+  idle_brightness: !input idle_brightness
+  active_volume: !input active_volume
+  idle_volume: !input idle_volume
+action:
+  - service: !input notify_service
+    data:
+      message: kiosk_set_brightness
+      data:
+        level: "{{ active_brightness if trigger.to_state.state == 'on' else idle_brightness }}"
+  - service: !input notify_service
+    data:
+      message: kiosk_set_volume
+      data:
+        volume: "{{ active_volume if trigger.to_state.state == 'on' else idle_volume }}"
