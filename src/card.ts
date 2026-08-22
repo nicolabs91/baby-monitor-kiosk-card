@@ -455,10 +455,14 @@ export class Card extends LitElement {
   }
   private openCamera() {
     if (!this.manualAllowed()) return;
+    const alreadyActive = this.machineState === "ACTIVE" || this.machineState === "SILENCE_TIMER";
     this.manualActivation = true;
     this.ensureCamera(true);
     this.runtime?.open();
-    void this.activateVideo();
+    // A new MANUAL_OPEN transition activates video through the runtime
+    // subscriber. Only resume it directly when the shared runtime was already
+    // active (for example, sound is active on an unpaired client).
+    if (alreadyActive) void this.activateVideo();
     this.requestUpdate();
   }
   render() {
