@@ -54,7 +54,7 @@ Numeric sensors use hysteresis: activation occurs at or above `sound_threshold_d
 
 ## iOS audio and Companion commands
 
-iOS may require one user gesture before unmuted autoplay is permitted. Use the large mute button once after setup; the preference is kept locally. Optional `companion.notify_service` plus brightness/volume values sends the established `kiosk_*` notification commands. When enabled, the large volume and brightness buttons adjust these values in 20-point steps. Failures are non-fatal. Exact command support depends on the Companion App version and kiosk settings.
+iOS may require one user gesture before unmuted autoplay is permitted. For reliable preloading, start muted on iOS, then use the large speaker button once after setup; the preference is kept locally. Forcing an unmuted preload can make iOS block the media element and show a black stream. Optional `companion.notify_service` plus brightness/volume values sends the established `kiosk_*` notification commands. When enabled, the large volume and brightness buttons adjust these values in 20-point steps. Failures are non-fatal. Exact command support depends on the Companion App version and kiosk settings.
 
 ## State/debug
 

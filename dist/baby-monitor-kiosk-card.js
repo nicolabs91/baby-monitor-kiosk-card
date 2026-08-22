@@ -693,7 +693,7 @@ let C = class extends E {
     const t = e.id ?? `${e.camera ?? e.stream}|${e.sound_sensor}`;
     this.config && this.configId !== t && (this.unsubscribe?.(), ft(this.configId, this), this.portal?.remove(), this.portal = void 0, this.camera = void 0, this.cameraSignature = ""), this.config = { ...A, ...e }, this.id = this.configId, this.currentBrightness = e.companion?.active_brightness ?? 100, this.currentVolume = e.companion?.active_volume ?? 100;
     const s = e.audio?.remember_state === !1 ? null : localStorage.getItem(ut(this.configId));
-    this.muted = s === null ? e.audio?.default_muted ?? !1 : s === "true", this.connectRuntime(), this.ensureCamera();
+    this.muted = s === null ? e.audio?.default_muted ?? !1 : s === "true", this.connectRuntime(), this.ensureCamera(), this.configureCamera();
   }
   get configId() {
     return this.config?.id ?? `${this.config?.camera ?? this.config?.stream}|${this.config?.sound_sensor}`;
