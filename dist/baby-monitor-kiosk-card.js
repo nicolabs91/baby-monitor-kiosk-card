@@ -738,7 +738,7 @@ let C = class extends E {
     const t = this.config.companion?.notify_service;
     if (!t || !this.eligible() || !this.hass) return;
     const s = e ? this.config.companion?.active_brightness : this.config.companion?.idle_brightness, i = e ? this.config.companion?.active_volume : this.config.companion?.idle_volume, o = [];
-    e && o.push({ message: "kiosk_hide_screensaver", data: this.silentCommand() }), s != null && o.push({ message: "kiosk_set_brightness", data: this.silentCommand({ level: s }) }), i != null && o.push({ message: "kiosk_set_volume", data: this.silentCommand({ volume: i }) }), e || o.push({ message: "kiosk_show_screensaver", data: this.silentCommand() });
+    e && this.config.companion?.screensaver !== !1 && o.push({ message: "kiosk_hide_screensaver", data: this.silentCommand() }), s != null && o.push({ message: "kiosk_set_brightness", data: this.silentCommand({ level: s }) }), i != null && o.push({ message: "kiosk_set_volume", data: this.silentCommand({ volume: i }) }), !e && this.config.companion?.screensaver !== !1 && o.push({ message: "kiosk_show_screensaver", data: this.silentCommand() });
     for (const n of o) try {
       await this.hass.callService("notify", t, n);
     } catch (r) {
