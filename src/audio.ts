@@ -14,6 +14,10 @@ export function shouldRefreshVideoOnActivation(userAgent:string,platform:string,
   return needsFreshVideoOnActivation(userAgent,platform,touchPoints)&&(manualActivation||!automaticAudio);
 }
 
+// The WebRTC card creates its video element asynchronously. iOS can take
+// considerably longer than 300 ms after the app or screen wakes.
+export const automaticAudioRetryDelays = [0,150,350,700,1200,2000] as const;
+
 const unlockedMonitors=new Set<string>();
 export function isAutomaticAudioUnlocked(id:string){return unlockedMonitors.has(id)}
 export function unlockAutomaticAudio(id:string){unlockedMonitors.add(id)}

@@ -4,7 +4,7 @@ import type { CardConfig, Hass, MachineState } from "./types";
 import { defaults } from "./types";
 import { runtimeFor, claimOwner, releaseOwner } from "./runtime";
 import { audioKey, isPaired, pair, unpair } from "./device";
-import { initialMuted, isAutomaticAudioUnlocked, shouldRefreshVideoOnActivation, unlockAutomaticAudio } from "./audio";
+import { automaticAudioRetryDelays, initialMuted, isAutomaticAudioUnlocked, shouldRefreshVideoOnActivation, unlockAutomaticAudio } from "./audio";
 @customElement("baby-monitor-kiosk-card")
 export class Card extends LitElement {
   @property({ attribute: false }) hass?: Hass;
@@ -20,6 +20,7 @@ export class Card extends LitElement {
   private cameraSignature = "";
   private currentBrightness = 100;
   private currentVolume = 100;
+  private audioRestoreTimers: number[] = [];
   static styles = css`
     :host {
       display: block;
@@ -241,11 +242,17 @@ export class Card extends LitElement {
       if (s === "IDLE" || s === "MANUAL_COOLDOWN") this.manualActivation = false;
       this.automaticAudio = isAutomaticAudioUnlocked(this.configId);
       this.requestUpdate();
-      if (claimOwner(this.configId, this)) {
+      const canOwn = this.eligible() || this.manualActivation;
+      if (canOwn && claimOwner(this.configId, this)) {
         if (s === "ACTIVE" && (this.eligible() || this.manualActivation)) {
           this.companion(true);
           void this.activateVideo();
         }
+        // The fullscreen camera remains visible during the silence timer. A
+        // legacy sensor-off automation may already have restored the kiosk's
+        // idle brightness, so reassert the active levels for this visible
+        // phase as well.
+        if (s === "SILENCE_TIMER" && this.active()) this.companion(true);
         if (s === "IDLE" || s === "MANUAL_COOLDOWN") {
           this.companion(false);
           this.muteVideo();
@@ -268,6 +275,7 @@ export class Card extends LitElement {
     this.portal?.remove();
     this.portal = undefined;
     releaseOwner(this.configId, this);
+    this.cancelAutomaticAudioRestore();
   }
   updated() {
     if (this.hass) this.runtime?.update(this.hass);
@@ -317,27 +325,48 @@ export class Card extends LitElement {
     }
     requestAnimationFrame(() => {
       this.playVideos(this.camera);
-      setTimeout(() => {
-        this.playVideos(this.camera);
-        if (restoreAudio) {
-          this.muted = false;
-          this.applyVideoMuted(this.camera, false);
-          this.requestUpdate();
-        }
-      }, 300);
+      if (restoreAudio) this.restoreAutomaticAudioWhenReady();
     });
   }
-  private playVideos(root: any) {
-    if (!root) return;
+  private playVideos(root: any): number {
+    if (!root) return 0;
+    let count = 0;
     for (const video of root.querySelectorAll?.("video") ?? []) {
+      count += 1;
       video.muted = this.muted;
       video.playsInline = true;
       void video.play?.().catch(() => {});
     }
-    this.playVideos(root.shadowRoot);
+    return count + this.playVideos(root.shadowRoot);
+  }
+  private restoreAutomaticAudioWhenReady() {
+    this.cancelAutomaticAudioRestore();
+    for (const delay of automaticAudioRetryDelays) {
+      const timer = window.setTimeout(() => {
+        if (!this.active() || !isAutomaticAudioUnlocked(this.configId)) return;
+        if (!this.videoCount(this.camera)) return;
+        this.muted = false;
+        this.configureCamera();
+        this.playVideos(this.camera);
+        this.applyVideoMuted(this.camera, false);
+        this.cancelAutomaticAudioRestore();
+        this.requestUpdate();
+      }, delay);
+      this.audioRestoreTimers.push(timer);
+    }
+  }
+  private cancelAutomaticAudioRestore() {
+    for (const timer of this.audioRestoreTimers) clearTimeout(timer);
+    this.audioRestoreTimers = [];
+  }
+  private videoCount(root: any): number {
+    if (!root) return 0;
+    return (root.querySelectorAll?.("video")?.length ?? 0) + this.videoCount(root.shadowRoot);
   }
   private muteVideo() {
+    this.cancelAutomaticAudioRestore();
     this.muted = true;
+    this.configureCamera();
     this.applyVideoMuted(this.camera, true);
     this.requestUpdate();
   }
@@ -350,6 +379,7 @@ export class Card extends LitElement {
     unlockAutomaticAudio(this.configId);
     this.automaticAudio = true;
     this.muted = false;
+    this.configureCamera();
     this.applyVideoMuted(this.camera, false);
     this.playVideos(this.camera);
     if (!this.active()) setTimeout(() => this.muteVideo(), 150);
@@ -373,6 +403,7 @@ export class Card extends LitElement {
     this.muted = !this.muted;
     if (this.config.audio?.remember_state !== false) localStorage.setItem(audioKey(this.configId), String(this.muted));
     this.applyVideoMuted(this.camera, this.muted);
+    this.configureCamera();
     this.playVideos(this.camera);
     this.requestUpdate();
   }
