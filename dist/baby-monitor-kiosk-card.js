@@ -684,7 +684,7 @@ function oe(e, t = "", i = 0) {
   return /iPad|iPhone|iPod/i.test(e) || t === "MacIntel" && i > 1;
 }
 function ne(e, t, i, s, o) {
-  return oe(e, t, i) && (o || !s);
+  return oe(e, t, i);
 }
 const re = [0, 150, 350, 700, 1200, 2e3], St = /* @__PURE__ */ new Set();
 function D(e) {
@@ -1113,5 +1113,5 @@ window.customCards.push({
   name: "Baby Monitor Kiosk Card",
   description: "Device-local sound-triggered preloaded WebRTC baby monitor"
 });
-console.info("%c BABY-MONITOR-KIOSK-CARD %c 0.3.9 ", "color:white;background:#3949ab;font-weight:bold", "color:#3949ab;background:white");
+console.info("%c BABY-MONITOR-KIOSK-CARD %c 0.3.10 ", "color:white;background:#3949ab;font-weight:bold", "color:#3949ab;background:white");
 //# sourceMappingURL=baby-monitor-kiosk-card.js.map

@@ -11,7 +11,11 @@ export function needsFreshVideoOnActivation(userAgent:string,platform='',touchPo
 }
 
 export function shouldRefreshVideoOnActivation(userAgent:string,platform:string,touchPoints:number,automaticAudio:boolean,manualActivation:boolean){
-  return needsFreshVideoOnActivation(userAgent,platform,touchPoints)&&(manualActivation||!automaticAudio);
+  // A long-lived, prewarmed iOS WebRTC decoder can continue receiving bytes
+  // while rendering only black. Always rebuild it when the overlay activates;
+  // Card.activateVideo starts the replacement muted and restores unlocked
+  // audio only after its real video element is ready.
+  return needsFreshVideoOnActivation(userAgent,platform,touchPoints);
 }
 
 // The WebRTC card creates its video element asynchronously. iOS can take
