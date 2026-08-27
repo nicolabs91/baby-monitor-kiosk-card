@@ -20,6 +20,9 @@ export class Card extends LitElement {
   private cameraSignature = "";
   private currentBrightness = 100;
   private currentVolume = 100;
+  private previousBrightness?: number;
+  private previousVolume?: number;
+  private companionActive = false;
   private audioRestoreTimers: number[] = [];
   static styles = css`
     :host {
@@ -245,16 +248,16 @@ export class Card extends LitElement {
       const canOwn = this.eligible() || this.manualActivation;
       if (canOwn && claimOwner(this.configId, this)) {
         if (s === "ACTIVE" && (this.eligible() || this.manualActivation)) {
-          this.companion(true);
+          void this.companion(true);
           void this.activateVideo();
         }
         // The fullscreen camera remains visible during the silence timer. A
         // legacy sensor-off automation may already have restored the kiosk's
         // idle brightness, so reassert the active levels for this visible
         // phase as well.
-        if (s === "SILENCE_TIMER" && this.active()) this.companion(true);
+        if (s === "SILENCE_TIMER" && this.active()) void this.companion(true);
         if (s === "IDLE" || s === "MANUAL_COOLDOWN") {
-          this.companion(false);
+          void this.companion(false);
           this.muteVideo();
         }
       }
@@ -287,7 +290,10 @@ export class Card extends LitElement {
     return {
       type: "custom:webrtc-camera",
       ...(this.config.stream ? { url: this.config.stream } : { entity: this.config.camera }),
-      muted: this.muted,
+      // Reconfiguring an iOS WebRTC player from muted to unmuted can replace
+      // or block the media element. Keep its config safe and control the
+      // already-playing video element directly instead.
+      muted: true,
       controls: true,
     };
   }
@@ -346,7 +352,6 @@ export class Card extends LitElement {
         if (!this.active() || !isAutomaticAudioUnlocked(this.configId)) return;
         if (!this.videoCount(this.camera)) return;
         this.muted = false;
-        this.configureCamera();
         this.playVideos(this.camera);
         this.applyVideoMuted(this.camera, false);
         this.cancelAutomaticAudioRestore();
@@ -366,7 +371,6 @@ export class Card extends LitElement {
   private muteVideo() {
     this.cancelAutomaticAudioRestore();
     this.muted = true;
-    this.configureCamera();
     this.applyVideoMuted(this.camera, true);
     this.requestUpdate();
   }
@@ -379,7 +383,6 @@ export class Card extends LitElement {
     unlockAutomaticAudio(this.configId);
     this.automaticAudio = true;
     this.muted = false;
-    this.configureCamera();
     this.applyVideoMuted(this.camera, false);
     this.playVideos(this.camera);
     if (!this.active()) setTimeout(() => this.muteVideo(), 150);
@@ -403,15 +406,30 @@ export class Card extends LitElement {
     this.muted = !this.muted;
     if (this.config.audio?.remember_state !== false) localStorage.setItem(audioKey(this.configId), String(this.muted));
     this.applyVideoMuted(this.camera, this.muted);
-    this.configureCamera();
     this.playVideos(this.camera);
     this.requestUpdate();
   }
   private async companion(active: boolean) {
     const service = this.config.companion?.notify_service;
     if (!service || !this.eligible() || !this.hass) return;
-    const brightness = active ? this.config.companion?.active_brightness : this.config.companion?.idle_brightness;
-    const volume = active ? this.config.companion?.active_volume : this.config.companion?.idle_volume;
+    // Initial IDLE subscriptions must not force an arbitrary idle level. Only
+    // restore after this card actually activated the kiosk.
+    if (!active && !this.companionActive) return;
+    if (active && !this.companionActive) {
+      this.captureCompanionLevels();
+      this.companionActive = true;
+    }
+    const restorePrevious = this.config.companion?.restore_previous !== false;
+    const brightness = active
+      ? this.config.companion?.active_brightness
+      : restorePrevious && this.previousBrightness != null
+        ? this.previousBrightness
+        : this.config.companion?.idle_brightness;
+    const volume = active
+      ? this.config.companion?.active_volume
+      : restorePrevious && this.previousVolume != null
+        ? this.previousVolume
+        : this.config.companion?.idle_volume;
     const commands = [] as {
       message: string;
       data?: Record<string, unknown>;
@@ -430,6 +448,20 @@ export class Card extends LitElement {
       } catch (e) {
         if (this.config.debug) console.warn("[baby-monitor] Companion command failed", e);
       }
+    if (!active) {
+      this.companionActive = false;
+      this.previousBrightness = undefined;
+      this.previousVolume = undefined;
+    }
+  }
+  private captureCompanionLevels() {
+    const read = (entityId?: string) => {
+      if (!entityId || !this.hass) return undefined;
+      const value = Number(this.hass.states[entityId]?.state);
+      return Number.isFinite(value) && value >= 0 && value <= 100 ? value : undefined;
+    };
+    this.previousBrightness = read(this.config.companion?.brightness_sensor);
+    this.previousVolume = read(this.config.companion?.volume_sensor);
   }
   private async kioskLevel(kind: "brightness" | "volume", delta: number) {
     const service = this.config.companion?.notify_service;

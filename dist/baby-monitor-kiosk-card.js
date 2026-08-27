@@ -17,7 +17,7 @@ let gt = class {
     return this.cssText;
   }
 };
-const St = (e) => new gt(typeof e == "string" ? e : e + "", void 0, F), bt = (e, ...t) => {
+const Ct = (e) => new gt(typeof e == "string" ? e : e + "", void 0, F), bt = (e, ...t) => {
   const i = e.length === 1 ? e[0] : t.reduce((s, o, n) => s + ((r) => {
     if (r._$cssResult$ === !0) return r.cssText;
     if (typeof r == "number") return r;
@@ -33,9 +33,9 @@ const St = (e) => new gt(typeof e == "string" ? e : e + "", void 0, F), bt = (e,
 }, st = K ? (e) => e : (e) => e instanceof CSSStyleSheet ? ((t) => {
   let i = "";
   for (const s of t.cssRules) i += s.cssText;
-  return St(i);
+  return Ct(i);
 })(e) : e;
-const { is: Mt, defineProperty: It, getOwnPropertyDescriptor: Pt, getOwnPropertyNames: Nt, getOwnPropertySymbols: Lt, getPrototypeOf: Ut } = Object, B = globalThis, ot = B.trustedTypes, Tt = ot ? ot.emptyScript : "", Dt = B.reactiveElementPolyfillSupport, S = (e, t) => e, V = { toAttribute(e, t) {
+const { is: Mt, defineProperty: It, getOwnPropertyDescriptor: Nt, getOwnPropertyNames: Pt, getOwnPropertySymbols: Lt, getPrototypeOf: Ut } = Object, B = globalThis, ot = B.trustedTypes, Tt = ot ? ot.emptyScript : "", Dt = B.reactiveElementPolyfillSupport, C = (e, t) => e, V = { toAttribute(e, t) {
   switch (t) {
     case Boolean:
       e = e ? Tt : null;
@@ -79,7 +79,7 @@ let A = class extends HTMLElement {
     }
   }
   static getPropertyDescriptor(t, i, s) {
-    const { get: o, set: n } = Pt(this.prototype, t) ?? { get() {
+    const { get: o, set: n } = Nt(this.prototype, t) ?? { get() {
       return this[i];
     }, set(r) {
       this[i] = r;
@@ -93,14 +93,14 @@ let A = class extends HTMLElement {
     return this.elementProperties.get(t) ?? nt;
   }
   static _$Ei() {
-    if (this.hasOwnProperty(S("elementProperties"))) return;
+    if (this.hasOwnProperty(C("elementProperties"))) return;
     const t = Ut(this);
     t.finalize(), t.l !== void 0 && (this.l = [...t.l]), this.elementProperties = new Map(t.elementProperties);
   }
   static finalize() {
-    if (this.hasOwnProperty(S("finalized"))) return;
-    if (this.finalized = !0, this._$Ei(), this.hasOwnProperty(S("properties"))) {
-      const i = this.properties, s = [...Nt(i), ...Lt(i)];
+    if (this.hasOwnProperty(C("finalized"))) return;
+    if (this.finalized = !0, this._$Ei(), this.hasOwnProperty(C("properties"))) {
+      const i = this.properties, s = [...Pt(i), ...Lt(i)];
       for (const o of s) this.createProperty(o, i[o]);
     }
     const t = this[Symbol.metadata];
@@ -246,9 +246,9 @@ let A = class extends HTMLElement {
   firstUpdated(t) {
   }
 };
-A.elementStyles = [], A.shadowRootOptions = { mode: "open" }, A[S("elementProperties")] = /* @__PURE__ */ new Map(), A[S("finalized")] = /* @__PURE__ */ new Map(), Dt?.({ ReactiveElement: A }), (B.reactiveElementVersions ??= []).push("2.1.2");
+A.elementStyles = [], A.shadowRootOptions = { mode: "open" }, A[C("elementProperties")] = /* @__PURE__ */ new Map(), A[C("finalized")] = /* @__PURE__ */ new Map(), Dt?.({ ReactiveElement: A }), (B.reactiveElementVersions ??= []).push("2.1.2");
 const Q = globalThis, rt = (e) => e, H = Q.trustedTypes, at = H ? H.createPolicy("lit-html", { createHTML: (e) => e }) : void 0, _t = "$lit$", g = `lit$${Math.random().toFixed(9).slice(2)}$`, $t = "?" + g, Rt = `<${$t}>`, v = document, M = () => v.createComment(""), I = (e) => e === null || typeof e != "object" && typeof e != "function", Z = Array.isArray, Vt = (e) => Z(e) || typeof e?.[Symbol.iterator] == "function", W = `[ 	
-\f\r]`, C = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, ct = /-->/g, ht = />/g, b = RegExp(`>|${W}(?:([^\\s"'>=/]+)(${W}*=${W}*(?:[^ 	
+\f\r]`, S = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, ct = /-->/g, ht = />/g, b = RegExp(`>|${W}(?:([^\\s"'>=/]+)(${W}*=${W}*(?:[^ 	
 \f\r"'\`<>=]|("|')|))|$)`, "g"), lt = /'/g, dt = /"/g, vt = /^(?:script|style|textarea|title)$/i, Ht = (e) => (t, ...i) => ({ _$litType$: e, strings: t, values: i }), u = Ht(1), k = /* @__PURE__ */ Symbol.for("lit-noChange"), h = /* @__PURE__ */ Symbol.for("lit-nothing"), ut = /* @__PURE__ */ new WeakMap(), _ = v.createTreeWalker(v, 129);
 function yt(e, t) {
   if (!Z(e) || !e.hasOwnProperty("raw")) throw Error("invalid template strings array");
@@ -256,23 +256,23 @@ function yt(e, t) {
 }
 const zt = (e, t) => {
   const i = e.length - 1, s = [];
-  let o, n = t === 2 ? "<svg>" : t === 3 ? "<math>" : "", r = C;
+  let o, n = t === 2 ? "<svg>" : t === 3 ? "<math>" : "", r = S;
   for (let c = 0; c < i; c++) {
     const a = e[c];
     let d, p, l = -1, m = 0;
-    for (; m < a.length && (r.lastIndex = m, p = r.exec(a), p !== null); ) m = r.lastIndex, r === C ? p[1] === "!--" ? r = ct : p[1] !== void 0 ? r = ht : p[2] !== void 0 ? (vt.test(p[2]) && (o = RegExp("</" + p[2], "g")), r = b) : p[3] !== void 0 && (r = b) : r === b ? p[0] === ">" ? (r = o ?? C, l = -1) : p[1] === void 0 ? l = -2 : (l = r.lastIndex - p[2].length, d = p[1], r = p[3] === void 0 ? b : p[3] === '"' ? dt : lt) : r === dt || r === lt ? r = b : r === ct || r === ht ? r = C : (r = b, o = void 0);
+    for (; m < a.length && (r.lastIndex = m, p = r.exec(a), p !== null); ) m = r.lastIndex, r === S ? p[1] === "!--" ? r = ct : p[1] !== void 0 ? r = ht : p[2] !== void 0 ? (vt.test(p[2]) && (o = RegExp("</" + p[2], "g")), r = b) : p[3] !== void 0 && (r = b) : r === b ? p[0] === ">" ? (r = o ?? S, l = -1) : p[1] === void 0 ? l = -2 : (l = r.lastIndex - p[2].length, d = p[1], r = p[3] === void 0 ? b : p[3] === '"' ? dt : lt) : r === dt || r === lt ? r = b : r === ct || r === ht ? r = S : (r = b, o = void 0);
     const f = r === b && e[c + 1].startsWith("/>") ? " " : "";
-    n += r === C ? a + Rt : l >= 0 ? (s.push(d), a.slice(0, l) + _t + a.slice(l) + g + f) : a + g + (l === -2 ? c : f);
+    n += r === S ? a + Rt : l >= 0 ? (s.push(d), a.slice(0, l) + _t + a.slice(l) + g + f) : a + g + (l === -2 ? c : f);
   }
   return [yt(e, n + (e[i] || "<?>") + (t === 2 ? "</svg>" : t === 3 ? "</math>" : "")), s];
 };
-class P {
+class N {
   constructor({ strings: t, _$litType$: i }, s) {
     let o;
     this.parts = [];
     let n = 0, r = 0;
     const c = t.length - 1, a = this.parts, [d, p] = zt(t, i);
-    if (this.el = P.createElement(d, s), _.currentNode = this.el.content, i === 2 || i === 3) {
+    if (this.el = N.createElement(d, s), _.currentNode = this.el.content, i === 2 || i === 3) {
       const l = this.el.content.firstChild;
       l.replaceWith(...l.childNodes);
     }
@@ -368,7 +368,7 @@ class L {
     this._$AH !== h && I(this._$AH) ? this._$AA.nextSibling.data = t : this.T(v.createTextNode(t)), this._$AH = t;
   }
   $(t) {
-    const { values: i, _$litType$: s } = t, o = typeof s == "number" ? this._$AC(t) : (s.el === void 0 && (s.el = P.createElement(yt(s.h, s.h[0]), this.options)), s);
+    const { values: i, _$litType$: s } = t, o = typeof s == "number" ? this._$AC(t) : (s.el === void 0 && (s.el = N.createElement(yt(s.h, s.h[0]), this.options)), s);
     if (this._$AH?._$AD === o) this._$AH.p(i);
     else {
       const n = new Bt(o, this), r = n.u(this.options);
@@ -377,7 +377,7 @@ class L {
   }
   _$AC(t) {
     let i = ut.get(t.strings);
-    return i === void 0 && ut.set(t.strings, i = new P(t)), i;
+    return i === void 0 && ut.set(t.strings, i = new N(t)), i;
   }
   k(t) {
     Z(this._$AH) || (this._$AH = [], this._$AR());
@@ -462,7 +462,7 @@ class Gt {
   }
 }
 const Kt = Q.litHtmlPolyfillSupport;
-Kt?.(P, L), (Q.litHtmlVersions ??= []).push("3.3.3");
+Kt?.(N, L), (Q.litHtmlVersions ??= []).push("3.3.3");
 const At = (e, t, i) => {
   const s = i?.renderBefore ?? t;
   let o = s._$litPart$;
@@ -552,7 +552,7 @@ var Zt = Object.defineProperty, Xt = Object.getOwnPropertyDescriptor, et = (e, t
     (r = e[n]) && (o = (s ? r(t, i, o) : r(o)) || o);
   return s && o && Zt(t, i, o), o;
 };
-let N = class extends w {
+let P = class extends w {
   setConfig(e) {
     this.config = structuredClone(e);
   }
@@ -578,16 +578,16 @@ let N = class extends w {
     }}>${$(t) ? "Ontkoppel" : "Koppel dit apparaat"}</button></div></div>`;
   }
 };
-N.styles = bt`:host{display:block;padding:16px}.grid{display:grid;gap:12px}label{display:grid;gap:4px}input{padding:8px}.pair{display:flex;gap:8px;align-items:center}button{padding:10px}`;
+P.styles = bt`:host{display:block;padding:16px}.grid{display:grid;gap:12px}label{display:grid;gap:4px}input{padding:8px}.pair{display:flex;gap:8px;align-items:center}button{padding:10px}`;
 et([
   Y({ attribute: !1 })
-], N.prototype, "hass", 2);
+], P.prototype, "hass", 2);
 et([
   q()
-], N.prototype, "config", 2);
-N = et([
+], P.prototype, "config", 2);
+P = et([
   Et("baby-monitor-kiosk-card-editor")
-], N);
+], P);
 const E = { preload: !0, trigger_for: 1, silence_duration: 5, manual_close_cooldown: 30, sound_threshold_db: 48, sound_reset_db: 42 };
 function Yt(e, t) {
   if (t.type === "MANUAL_OPEN") return "ACTIVE";
@@ -686,12 +686,12 @@ function oe(e, t = "", i = 0) {
 function ne(e, t, i, s, o) {
   return oe(e, t, i) && (o || !s);
 }
-const re = [0, 150, 350, 700, 1200, 2e3], Ct = /* @__PURE__ */ new Set();
+const re = [0, 150, 350, 700, 1200, 2e3], St = /* @__PURE__ */ new Set();
 function D(e) {
-  return Ct.has(e);
+  return St.has(e);
 }
 function ae(e) {
-  Ct.add(e);
+  St.add(e);
 }
 var ce = Object.defineProperty, he = Object.getOwnPropertyDescriptor, U = (e, t, i, s) => {
   for (var o = s > 1 ? void 0 : s ? he(t, i) : t, n = e.length - 1, r; n >= 0; n--)
@@ -700,7 +700,7 @@ var ce = Object.defineProperty, he = Object.getOwnPropertyDescriptor, U = (e, t,
 };
 let y = class extends w {
   constructor() {
-    super(...arguments), this.machineState = "IDLE", this.muted = !0, this.automaticAudio = !1, this.manualActivation = !1, this.cameraSignature = "", this.currentBrightness = 100, this.currentVolume = 100, this.audioRestoreTimers = [];
+    super(...arguments), this.machineState = "IDLE", this.muted = !0, this.automaticAudio = !1, this.manualActivation = !1, this.cameraSignature = "", this.currentBrightness = 100, this.currentVolume = 100, this.companionActive = !1, this.audioRestoreTimers = [];
   }
   static getConfigElement() {
     return document.createElement("baby-monitor-kiosk-card-editor");
@@ -743,7 +743,10 @@ let y = class extends w {
     return {
       type: "custom:webrtc-camera",
       ...this.config.stream ? { url: this.config.stream } : { entity: this.config.camera },
-      muted: this.muted,
+      // Reconfiguring an iOS WebRTC player from muted to unmuted can replace
+      // or block the media element. Keep its config safe and control the
+      // already-playing video element directly instead.
+      muted: !0,
       controls: !0
     };
   }
@@ -775,7 +778,7 @@ let y = class extends w {
     this.cancelAutomaticAudioRestore();
     for (const e of re) {
       const t = window.setTimeout(() => {
-        !this.active() || !D(this.configId) || this.videoCount(this.camera) && (this.muted = !1, this.configureCamera(), this.playVideos(this.camera), this.applyVideoMuted(this.camera, !1), this.cancelAutomaticAudioRestore(), this.requestUpdate());
+        !this.active() || !D(this.configId) || this.videoCount(this.camera) && (this.muted = !1, this.playVideos(this.camera), this.applyVideoMuted(this.camera, !1), this.cancelAutomaticAudioRestore(), this.requestUpdate());
       }, e);
       this.audioRestoreTimers.push(t);
     }
@@ -788,7 +791,7 @@ let y = class extends w {
     return e ? (e.querySelectorAll?.("video")?.length ?? 0) + this.videoCount(e.shadowRoot) : 0;
   }
   muteVideo() {
-    this.cancelAutomaticAudioRestore(), this.muted = !0, this.configureCamera(), this.applyVideoMuted(this.camera, !0), this.requestUpdate();
+    this.cancelAutomaticAudioRestore(), this.muted = !0, this.applyVideoMuted(this.camera, !0), this.requestUpdate();
   }
   applyVideoMuted(e, t) {
     if (e) {
@@ -797,7 +800,7 @@ let y = class extends w {
     }
   }
   enableAutomaticAudio() {
-    ae(this.configId), this.automaticAudio = !0, this.muted = !1, this.configureCamera(), this.applyVideoMuted(this.camera, !1), this.playVideos(this.camera), this.active() || setTimeout(() => this.muteVideo(), 150), this.requestUpdate();
+    ae(this.configId), this.automaticAudio = !0, this.muted = !1, this.applyVideoMuted(this.camera, !1), this.playVideos(this.camera), this.active() || setTimeout(() => this.muteVideo(), 150), this.requestUpdate();
   }
   eligible() {
     return this.config.kiosk?.enabled !== !1 && (this.config.kiosk?.device_bound === !1 || $(this.configId)) && (!this.config.kiosk?.allowed_user_ids?.length || !!this.hass?.user && this.config.kiosk.allowed_user_ids.includes(this.hass.user.id));
@@ -813,22 +816,32 @@ let y = class extends w {
       this.enableAutomaticAudio();
       return;
     }
-    this.muted = !this.muted, this.config.audio?.remember_state !== !1 && localStorage.setItem(pt(this.configId), String(this.muted)), this.applyVideoMuted(this.camera, this.muted), this.configureCamera(), this.playVideos(this.camera), this.requestUpdate();
+    this.muted = !this.muted, this.config.audio?.remember_state !== !1 && localStorage.setItem(pt(this.configId), String(this.muted)), this.applyVideoMuted(this.camera, this.muted), this.playVideos(this.camera), this.requestUpdate();
   }
   async companion(e) {
     const t = this.config.companion?.notify_service;
-    if (!t || !this.eligible() || !this.hass) return;
-    const i = e ? this.config.companion?.active_brightness : this.config.companion?.idle_brightness, s = e ? this.config.companion?.active_volume : this.config.companion?.idle_volume, o = [];
-    e && this.config.companion?.screensaver !== !1 && o.push({ message: "kiosk_hide_screensaver" }), i != null && o.push({
+    if (!t || !this.eligible() || !this.hass || !e && !this.companionActive) return;
+    e && !this.companionActive && (this.captureCompanionLevels(), this.companionActive = !0);
+    const i = this.config.companion?.restore_previous !== !1, s = e ? this.config.companion?.active_brightness : i && this.previousBrightness != null ? this.previousBrightness : this.config.companion?.idle_brightness, o = e ? this.config.companion?.active_volume : i && this.previousVolume != null ? this.previousVolume : this.config.companion?.idle_volume, n = [];
+    e && this.config.companion?.screensaver !== !1 && n.push({ message: "kiosk_hide_screensaver" }), s != null && n.push({
       message: "kiosk_set_brightness",
-      data: { level: i }
-    }), s != null && o.push({ message: "kiosk_set_volume", data: { volume: s } }), !e && this.config.companion?.screensaver !== !1 && o.push({ message: "kiosk_show_screensaver" });
-    for (const n of o)
+      data: { level: s }
+    }), o != null && n.push({ message: "kiosk_set_volume", data: { volume: o } }), !e && this.config.companion?.screensaver !== !1 && n.push({ message: "kiosk_show_screensaver" });
+    for (const r of n)
       try {
-        await this.hass.callService("notify", t, n);
-      } catch (r) {
-        this.config.debug && console.warn("[baby-monitor] Companion command failed", r);
+        await this.hass.callService("notify", t, r);
+      } catch (c) {
+        this.config.debug && console.warn("[baby-monitor] Companion command failed", c);
       }
+    e || (this.companionActive = !1, this.previousBrightness = void 0, this.previousVolume = void 0);
+  }
+  captureCompanionLevels() {
+    const e = (t) => {
+      if (!t || !this.hass) return;
+      const i = Number(this.hass.states[t]?.state);
+      return Number.isFinite(i) && i >= 0 && i <= 100 ? i : void 0;
+    };
+    this.previousBrightness = e(this.config.companion?.brightness_sensor), this.previousVolume = e(this.config.companion?.volume_sensor);
   }
   async kioskLevel(e, t) {
     const i = this.config.companion?.notify_service;
@@ -1100,5 +1113,5 @@ window.customCards.push({
   name: "Baby Monitor Kiosk Card",
   description: "Device-local sound-triggered preloaded WebRTC baby monitor"
 });
-console.info("%c BABY-MONITOR-KIOSK-CARD %c 0.3.8 ", "color:white;background:#3949ab;font-weight:bold", "color:#3949ab;background:white");
+console.info("%c BABY-MONITOR-KIOSK-CARD %c 0.3.9 ", "color:white;background:#3949ab;font-weight:bold", "color:#3949ab;background:white");
 //# sourceMappingURL=baby-monitor-kiosk-card.js.map

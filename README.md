@@ -26,7 +26,7 @@ preload: true
 sound_threshold_db: 48
 sound_reset_db: 42
 trigger_for: 1
-silence_duration: 20
+silence_duration: 5
 manual_close_cooldown: 30
 kiosk:
   enabled: true
@@ -41,6 +41,9 @@ controls:
   brightness: false
 companion:
   notify_service: mobile_app_ipad_van_nico
+  restore_previous: true
+  brightness_sensor: sensor.ipad_van_nico_kiosk_brightness
+  volume_sensor: sensor.ipad_van_nico_kiosk_volume
   active_brightness: 100
   idle_brightness: 10
   active_volume: 100
@@ -54,7 +57,7 @@ Numeric sensors use hysteresis: activation occurs at or above `sound_threshold_d
 
 ## iOS audio and Companion commands
 
-iOS requires one user gesture before unmuted autoplay is permitted. On the paired setup card, tap **Automatically enable camera audio** once after a fresh app/webview start. The permission is shared by duplicate card instances for the current webview session. The stream then unmutes automatically on sound and mutes again on idle. A full app termination, iOS process eviction, reboot, or webview reload requires the gesture again. Forcing an unmuted preload can make iOS block the media element and show a black stream. Optional `companion.notify_service` plus brightness/volume values sends the established `kiosk_*` notification commands. When enabled, the large volume and brightness buttons adjust these values in 20-point steps. Failures are non-fatal. Exact command support depends on the Companion App version and kiosk settings.
+iOS requires one user gesture before unmuted autoplay is permitted. On the paired setup card, tap **Automatically enable camera audio** once after a fresh app/webview start. The permission is shared by duplicate card instances for the current webview session. The stream then unmutes automatically on sound and mutes again on idle. A full app termination, iOS process eviction, reboot, or webview reload requires the gesture again. Forcing an unmuted preload can make iOS block the media element and show a black stream. Optional `companion.notify_service` plus brightness/volume values sends the established `kiosk_*` notification commands. With `restore_previous` (the default) and the two sensor entity IDs configured, the card snapshots the iPad's current levels before activation and restores those exact values afterward; the idle values remain safe fallbacks when a sensor is unavailable. When enabled, the large volume and brightness buttons adjust these values in 20-point steps. Failures are non-fatal. Exact command support depends on the Companion App version and kiosk settings.
 
 ## State/debug
 
