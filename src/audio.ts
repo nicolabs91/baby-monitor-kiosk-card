@@ -22,6 +22,17 @@ export function shouldRefreshVideoOnActivation(userAgent:string,platform:string,
 // considerably longer than 300 ms after the app or screen wakes.
 export const automaticAudioRetryDelays = [0,150,350,700,1200,2000] as const;
 
+export function applyMediaAudioState(video:any,muted:boolean){
+  video.muted=muted;
+  video.defaultMuted=muted;
+  if(muted)video.setAttribute?.('muted','');
+  else{
+    video.removeAttribute?.('muted');
+    video.volume=1;
+    for(const track of video.srcObject?.getAudioTracks?.()??[])track.enabled=true;
+  }
+}
+
 const unlockedMonitors=new Set<string>();
 export function isAutomaticAudioUnlocked(id:string){return unlockedMonitors.has(id)}
 export function unlockAutomaticAudio(id:string){unlockedMonitors.add(id)}

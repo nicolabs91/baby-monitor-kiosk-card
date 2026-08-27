@@ -6,4 +6,4 @@ import "./card";
   name: "Baby Monitor Kiosk Card",
   description: "Device-local sound-triggered preloaded WebRTC baby monitor",
 });
-console.info("%c BABY-MONITOR-KIOSK-CARD %c 0.3.10 ", "color:white;background:#3949ab;font-weight:bold", "color:#3949ab;background:white");
+console.info("%c BABY-MONITOR-KIOSK-CARD %c 0.3.11 ", "color:white;background:#3949ab;font-weight:bold", "color:#3949ab;background:white");

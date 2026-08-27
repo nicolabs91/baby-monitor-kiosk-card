@@ -4,7 +4,7 @@ import type { CardConfig, Hass, MachineState } from "./types";
 import { defaults } from "./types";
 import { runtimeFor, claimOwner, releaseOwner } from "./runtime";
 import { audioKey, isPaired, pair, unpair } from "./device";
-import { automaticAudioRetryDelays, initialMuted, isAutomaticAudioUnlocked, shouldRefreshVideoOnActivation, unlockAutomaticAudio } from "./audio";
+import { applyMediaAudioState, automaticAudioRetryDelays, initialMuted, isAutomaticAudioUnlocked, shouldRefreshVideoOnActivation, unlockAutomaticAudio } from "./audio";
 @customElement("baby-monitor-kiosk-card")
 export class Card extends LitElement {
   @property({ attribute: false }) hass?: Hass;
@@ -376,7 +376,12 @@ export class Card extends LitElement {
   }
   private applyVideoMuted(root: any, muted: boolean) {
     if (!root) return;
-    for (const video of root.querySelectorAll?.("video") ?? []) video.muted = muted;
+    for (const video of root.querySelectorAll?.("video") ?? []) {
+      // WebKit can keep an element effectively silent after only changing the
+      // `muted` property. Clear every mute path while still inside the user's
+      // speaker-button gesture and enable the WebRTC audio track before play().
+      applyMediaAudioState(video, muted);
+    }
     this.applyVideoMuted(root.shadowRoot, muted);
   }
   private enableAutomaticAudio() {

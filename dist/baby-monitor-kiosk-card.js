@@ -686,17 +686,25 @@ function oe(e, t = "", i = 0) {
 function ne(e, t, i, s, o) {
   return oe(e, t, i);
 }
-const re = [0, 150, 350, 700, 1200, 2e3], St = /* @__PURE__ */ new Set();
+const re = [0, 150, 350, 700, 1200, 2e3];
+function ae(e, t) {
+  if (e.muted = t, e.defaultMuted = t, t) e.setAttribute?.("muted", "");
+  else {
+    e.removeAttribute?.("muted"), e.volume = 1;
+    for (const i of e.srcObject?.getAudioTracks?.() ?? []) i.enabled = !0;
+  }
+}
+const St = /* @__PURE__ */ new Set();
 function D(e) {
   return St.has(e);
 }
-function ae(e) {
+function ce(e) {
   St.add(e);
 }
-var ce = Object.defineProperty, he = Object.getOwnPropertyDescriptor, U = (e, t, i, s) => {
-  for (var o = s > 1 ? void 0 : s ? he(t, i) : t, n = e.length - 1, r; n >= 0; n--)
+var he = Object.defineProperty, le = Object.getOwnPropertyDescriptor, U = (e, t, i, s) => {
+  for (var o = s > 1 ? void 0 : s ? le(t, i) : t, n = e.length - 1, r; n >= 0; n--)
     (r = e[n]) && (o = (s ? r(t, i, o) : r(o)) || o);
-  return s && o && ce(t, i, o), o;
+  return s && o && he(t, i, o), o;
 };
 let y = class extends w {
   constructor() {
@@ -795,12 +803,13 @@ let y = class extends w {
   }
   applyVideoMuted(e, t) {
     if (e) {
-      for (const i of e.querySelectorAll?.("video") ?? []) i.muted = t;
+      for (const i of e.querySelectorAll?.("video") ?? [])
+        ae(i, t);
       this.applyVideoMuted(e.shadowRoot, t);
     }
   }
   enableAutomaticAudio() {
-    ae(this.configId), this.automaticAudio = !0, this.muted = !1, this.applyVideoMuted(this.camera, !1), this.playVideos(this.camera), this.active() || setTimeout(() => this.muteVideo(), 150), this.requestUpdate();
+    ce(this.configId), this.automaticAudio = !0, this.muted = !1, this.applyVideoMuted(this.camera, !1), this.playVideos(this.camera), this.active() || setTimeout(() => this.muteVideo(), 150), this.requestUpdate();
   }
   eligible() {
     return this.config.kiosk?.enabled !== !1 && (this.config.kiosk?.device_bound === !1 || $(this.configId)) && (!this.config.kiosk?.allowed_user_ids?.length || !!this.hass?.user && this.config.kiosk.allowed_user_ids.includes(this.hass.user.id));
@@ -1113,5 +1122,5 @@ window.customCards.push({
   name: "Baby Monitor Kiosk Card",
   description: "Device-local sound-triggered preloaded WebRTC baby monitor"
 });
-console.info("%c BABY-MONITOR-KIOSK-CARD %c 0.3.10 ", "color:white;background:#3949ab;font-weight:bold", "color:#3949ab;background:white");
+console.info("%c BABY-MONITOR-KIOSK-CARD %c 0.3.11 ", "color:white;background:#3949ab;font-weight:bold", "color:#3949ab;background:white");
 //# sourceMappingURL=baby-monitor-kiosk-card.js.map
